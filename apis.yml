@@ -1,0 +1,47 @@
+name: SkipOdds
+description: >-
+  Sports-odds data API providing de-vigged consensus win probabilities (the SkipOdds Index) across 13 sports including
+  soccer, football, basketball, baseball, hockey, tennis, golf, cricket, rugby, MMA and boxing, with fixtures,
+  outrights, line movement, and webhook alerts.
+url: https://skipodds.apievangelist.com/apis.yml
+created: '2026-07-17'
+modified: '2026-07-17'
+specificationVersion: '0.21'
+tags:
+  - sports
+  - odds
+  - probabilities
+  - betting-data
+  - de-vig
+  - sports-data
+  - real-time
+  - webhooks
+apis:
+  - name: SkipOdds REST API
+    description: >-
+      API-key-authenticated REST API returning de-vigged consensus sports probabilities, fixtures, outrights, line
+      movement, and webhook alerts. Public OpenAPI 3.0.3 contract.
+    humanURL: https://skipodds.com/docs
+    baseURL: https://skipodds.com
+    tags:
+      - sports
+      - odds
+      - probabilities
+      - betting-data
+      - de-vig
+      - sports-data
+      - real-time
+      - webhooks
+    properties:
+      - type: OpenAPI
+        url: https://skipodds.com/openapi.json
+      - type: Documentation
+        url: https://skipodds.com/docs
+maintainers:
+  - FN: SkipSeek Inc.
+    url: https://skipodds.com/
+generated:
+  by: apis.io/add
+  model: claude-opus-4-8
+  confidence: 95
+  at: '2026-07-17T07:42:02.809Z'
