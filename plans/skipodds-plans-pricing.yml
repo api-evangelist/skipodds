@@ -1,0 +1,102 @@
+generated: '2026-08-11'
+method: searched
+source: https://skipodds.com/#pricing
+docs: https://skipodds.com/#pricing
+summary: >-
+  Six published tiers, all self-serve except Enterprise, all billed monthly through Stripe with no
+  contract. Every tier carries all 13 sports — the tiers differ only on daily request quota,
+  line-movement lookback window, webhook slots, attribution obligation, and support. Quota is the sole
+  metering unit; there is no per-endpoint or per-sport pricing.
+currency: USD
+billing_period: monthly
+billing_processor: Stripe
+plan_count: 6
+plans:
+  - name: Demo
+    price: 0
+    price_display: Free
+    self_serve: true
+    key: shared demo key skipodds-demo-2026
+    quota:
+      requests_per_day: 100
+      shared: true
+      note: Shared across ALL anonymous callers, not per-integrator.
+    movement_window_hours: 72
+    webhook_slots: 0
+    attribution_required: true
+    note: Applies automatically when no key is sent, including on the MCP server.
+  - name: Free
+    price: 0
+    price_display: $0
+    self_serve: true
+    signup: https://skipodds.com/#free
+    key: personal key
+    quota:
+      requests_per_day: 250
+      shared: false
+    movement_window_hours: 72
+    webhook_slots: 0
+    attribution_required: true
+    note: No card required. Described as issued in about a minute.
+  - name: Starter
+    price: 29
+    price_display: $29/mo
+    self_serve: true
+    checkout: https://buy.stripe.com/9B628t69Hc3O5Yv4439MY05
+    quota:
+      requests_per_day: 5000
+      shared: false
+    movement_window_hours: 72
+    webhook_slots: 2
+    attribution_required: false
+    audience: Side projects
+  - name: Pro
+    price: 99
+    price_display: $99/mo
+    self_serve: true
+    checkout: https://buy.stripe.com/fZucN71Tr5Fqfz5bwv9MY06
+    quota:
+      requests_per_day: 50000
+      shared: false
+    movement_window_hours: 72
+    webhook_slots: 5
+    attribution_required: false
+    support: email
+    audience: Publishers and sports sites
+    note: The only tier that removes the "Powered by SkipOdds" credit from the free embeddable widget.
+  - name: Scale
+    price: 199
+    price_display: $199/mo
+    self_serve: true
+    checkout: https://buy.stripe.com/9B6aEZ2XvebW0Eb0RR9MY0k
+    quota:
+      requests_per_day: 500000
+      shared: false
+    movement_window_hours: 336
+    webhook_slots: 20
+    attribution_required: false
+    support: priority
+    audience: Odds products and networks
+    note: Only tier with the 14-day (336h) line-movement window.
+  - name: Enterprise
+    price: null
+    price_display: Custom
+    self_serve: false
+    contact: mailto:hello@skipodds.com
+    quota:
+      requests_per_day: null
+    includes:
+      - historical data
+      - more competitions
+      - SLA
+    note: >-
+      Quoted, not published. This is the only place an SLA is mentioned anywhere on the site — there is
+      no public SLA document.
+free_tier: true
+trial: false
+cancellation: >-
+  Cancel any time via the Stripe receipt link or hello@skipodds.com; cancellation stops the next charge
+  and the key stays active until the paid period ends (https://skipodds.com/terms).
+cross_links:
+  rate_limits: rate-limits/skipodds-rate-limits.yml
+  terms: https://skipodds.com/terms

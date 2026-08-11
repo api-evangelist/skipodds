@@ -1,0 +1,99 @@
+generated: '2026-08-11'
+method: derived
+source: >-
+  openapi/skipodds-openapi.yml, mcp/skipodds-mcp-tools-list.json, live HTTP probes, and the published
+  docs at https://skipodds.com/docs
+summary: >-
+  SkipOdds conforms to two machine-readable standards and does so credibly: OpenAPI 3.0.3 served at a
+  discoverable URL, and Model Context Protocol 2025-06-18 over streamable-http. It conforms to no
+  security, error, or discovery convention beyond that — no OAuth, no RFC 9457, no RFC 9116, no RFC
+  8594, no /.well-known/ surface at all. No compliance certifications (SOC 2, ISO 27001, PCI, HIPAA,
+  GDPR posture) are claimed anywhere on the site, so NO Compliance pointer is emitted.
+standards:
+  - id: openapi-3.0.3
+    conforms: true
+    evidence: >-
+      Valid OpenAPI 3.0.3 document served at https://skipodds.com/openapi.json (200,
+      application/json), 11 operations, all with unique operationIds and summaries, securitySchemes
+      defined and applied globally.
+  - id: mcp-2025-06-18
+    conforms: true
+    evidence: >-
+      initialize returned protocolVersion 2025-06-18 with serverInfo {name: skipodds, version: 1.0.0}
+      and a tools capability; tools/list returned 5 tools each carrying inputSchema, outputSchema and
+      annotations (readOnlyHint/openWorldHint). Transport is streamable-http, stateless.
+  - id: json-rpc-2.0
+    conforms: true
+    evidence: MCP endpoint answers JSON-RPC 2.0, including correct -32601 for unimplemented methods.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'Errors are a flat {"error": "<slug>"} object served as application/json, not application/problem+json.'
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 securityScheme in the OpenAPI; no /.well-known/oauth-authorization-server (404).
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration returned 404.
+  - id: rfc6750-bearer-token
+    conforms: partial
+    evidence: >-
+      Uses the Authorization: Bearer header shape, but the bearer credential is a static API key rather
+      than an OAuth 2.0 access token, and there is no WWW-Authenticate challenge on 401 (the body is
+      {"error": "invalid_api_key"}).
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returned 404.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset or Deprecation header documented or observed; no deprecation policy published.
+  - id: rfc8615-well-known-uris
+    conforms: false
+    evidence: Every /.well-known/ path probed returned 404 (see well-known/skipodds-well-known.yml).
+  - id: a2a-agent-card
+    conforms: false
+    evidence: /.well-known/agent-card.json and /.well-known/agent.json both returned 404.
+  - id: asyncapi
+    conforms: false
+    evidence: >-
+      Webhooks are documented in prose at https://skipodds.com/docs/alerts but no AsyncAPI document is
+      published; the OpenAPI declares no `webhooks` object either.
+  - id: llms-txt
+    conforms: false
+    evidence: https://skipodds.com/llms.txt returned 404.
+  - id: json-api
+    conforms: false
+    evidence: Custom response envelope (source/attribution/generated_at/tier + payload key), not JSON:API.
+  - id: idempotency-key
+    conforms: false
+    evidence: No Idempotency-Key mechanism documented; see conventions/skipodds-conventions.yml.
+  - id: cursor-pagination
+    conforms: false
+    evidence: Only a `limit` parameter; no cursor, offset, page, or next-link.
+  - id: cors
+    conforms: true
+    evidence: 'Access-Control-Allow-Origin: * with explicit allow-methods and allow-headers on live responses.'
+  - id: tls-1.3
+    conforms: true
+    evidence: 'Live TLS handshake negotiated TLSv1.3 (see security/skipodds-domain-security.yml).'
+  - id: dnssec
+    conforms: false
+    evidence: No DNSSEC on skipodds.com.
+  - id: hsts
+    conforms: false
+    evidence: No Strict-Transport-Security header observed.
+compliance_certifications:
+  claimed: []
+  trust_center: null
+  notes: >-
+    No SOC 2, ISO 27001, PCI DSS, HIPAA, FedRAMP or GDPR posture is claimed on the site, in the privacy
+    policy, or in the terms. The privacy policy does name sub-processors (Stripe for billing, Resend for
+    transactional email, Cloudflare for hosting, Google Analytics for site traffic) and states that API
+    requests are not logged with IP addresses or personal identifiers by the provider — disclosure, not
+    certification. No Compliance pointer is emitted for this provider.
+sector_notes:
+  regulatory_posture: >-
+    Sports-odds data, not gambling. The provider states across the site, the terms, and every docs page
+    footer that the data is informational only, that it does not accept bets, hold funds, or settle
+    wagers, that no bookmaker names are exposed, and that the service is 18+. Bulk re-sale or
+    redistribution of raw responses is prohibited; display of values is permitted. No gaming-regulator
+    licence is claimed, and on this description none appears to be required.

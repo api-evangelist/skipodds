@@ -1,0 +1,90 @@
+generated: '2026-08-11'
+method: searched
+source: https://skipodds.com/docs/widget + https://skipodds.com/#widget + https://skipodds.com/widget.js (source read)
+summary: >-
+  One embeddable client-side component family: a declarative, attribute-configured odds board delivered
+  by a single loader script that injects a sandboxed iframe. It requires no API key and no account,
+  which makes it the provider's zero-friction distribution channel — and its commercial hook, since the
+  free embed renders a "Powered by SkipOdds" credit that only the Pro tier removes.
+component_count: 1
+families:
+  - family: SkipOdds widget
+    kind: embeddable-iframe
+    loader:
+      url: https://skipodds.com/widget.js
+      tag: '<script async src="https://skipodds.com/widget.js"></script>'
+      versioned: false
+      cache_control: no-store
+      note: >-
+        Unpinned and unversioned — see packages/skipodds-packages.yml. The loader scans for
+        [data-skipodds] elements, marks each with data-skipodds-mounted, and replaces it with an
+        iframe pointing at https://skipodds.com/embed.
+    mount_target: '<div data-skipodds></div>'
+    render_target: 'https://skipodds.com/embed (iframe)'
+    auth_required: false
+    account_required: false
+    attributes:
+      - name: data-widget
+        values: [board, outrights, upsets]
+        default: board
+        description: >-
+          board = upcoming-events board; outrights = tournament-winner chances (soccer and golf only);
+          upsets = the board re-ranked by live underdog chance.
+      - name: data-sport
+        values:
+          - soccer
+          - tennis
+          - baseball
+          - football
+          - basketball
+          - hockey
+          - college-football
+          - college-basketball
+          - cricket
+          - rugby
+          - mma
+          - boxing
+          - golf
+        default: soccer
+      - name: data-theme
+        values: [dark, light]
+        default: dark
+      - name: data-limit
+        values: integer
+        default: '5'
+      - name: data-competition
+        values: 'competition slug, or all'
+        default: all
+    privacy:
+      cookies: false
+      analytics: false
+      visitor_data_collected: false
+      source: https://skipodds.com/privacy
+      note: The privacy policy states the widget is a static iframe that sets no cookies and collects nothing about the embedding site's visitors.
+    branding:
+      credit_rendered: true
+      credit_text: Powered by SkipOdds
+      removable_on: Pro ($99/mo) and above
+      note: The credit is the price of the free embed; removing it is stated as the only difference in the data delivered.
+    robots: 'Disallowed for crawlers — robots.txt carries `Disallow: /embed`.'
+hosted_surfaces:
+  - name: Live storefront demos
+    kind: reference implementations
+    note: >-
+      The provider operates thirteen public sites built entirely on this API and links them from the
+      homepage as live proof of each sport feed. They are demonstrations, not embeddable components.
+    sites:
+      - https://wundergoal.com
+      - https://proball.io
+      - https://collegeball.io
+      - https://hoopseek.com
+      - https://puckseek.com
+      - https://cricketseek.com
+      - https://scrumseek.com
+      - https://mmaseek.com
+      - https://pinodds.com
+      - https://smashlob.com
+not_provided:
+  - No React/Vue/Svelte component package.
+  - No design system, element library, or theming API beyond data-theme.
+  - No embedded dashboard or customer-facing console.

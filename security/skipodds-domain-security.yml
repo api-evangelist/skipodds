@@ -1,0 +1,15 @@
+generated: '2026-08-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: skipodds.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 15 08:05:21 2026 GMT
+  hsts: null
+domains:
+- domain: skipodds.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: false

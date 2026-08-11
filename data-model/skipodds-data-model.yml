@@ -1,0 +1,151 @@
+generated: '2026-08-11'
+method: derived
+source: >-
+  openapi/skipodds-openapi.yml (components.schemas + inline response schemas) enriched from the object
+  examples published at https://skipodds.com/docs/fixtures, /docs/movement, /docs/outrights, /docs/alerts
+summary: >-
+  A shallow, read-oriented model with one idea at the centre: the Consensus object (the "SkipOdds
+  Index"), which every other entity embeds under the key `skipodds`. Only two schemas are named in
+  components (Consensus, Fixture) — every other shape is inlined per response, so the entities below
+  are derived from inline schemas and published examples rather than from named $refs. The single
+  relationship expressed by an id field is Fixture -> MovementSeries; everything else is composition.
+entities:
+  - name: Consensus
+    schema_ref: 'components.schemas.Consensus'
+    description: De-vigged consensus probabilities that sum to exactly 1. The "SkipOdds Index".
+    identifier: none
+    embedded_as: skipodds
+    fields:
+      - {name: home, type: number, note: 'Team sports with a priced draw'}
+      - {name: draw, type: number, nullable: true}
+      - {name: away, type: number}
+      - {name: p1, type: number, note: 'Tennis and combat sports (2-way). Documented, not in the named schema.'}
+      - {name: p2, type: number, note: 'Tennis and combat sports (2-way). Documented, not in the named schema.'}
+      - {name: players, type: array, note: 'Golf outrights — [{name, p, fair_odds}]. Documented, not in the named schema.'}
+      - {name: fair_odds, type: object, note: Decimal odds implied by the fair probabilities, keyed the same way.}
+      - {name: books_surveyed, type: integer}
+      - {name: margin_removed, type: number, note: The bookmaker overround stripped out, as a fraction.}
+    note: >-
+      The key set is POLYMORPHIC by market shape and the OpenAPI only models the 3-way home/draw/away
+      variant. p1/p2 and players[] appear in live responses and in the docs but not in the schema — a
+      real contract gap for any generated client.
+  - name: Fixture
+    schema_ref: 'components.schemas.Fixture'
+    description: One match, game, or fight, with its current Index.
+    identifier: id (uuid, opaque — documented as not constructable)
+    fields:
+      - {name: id, type: string, format: uuid}
+      - {name: home_team, type: string}
+      - {name: away_team, type: string}
+      - {name: match_date, type: string, format: date-time}
+      - {name: status, type: string, example: 'scheduled | live'}
+      - {name: stage, type: string, nullable: true}
+      - {name: skipodds, type: Consensus}
+      - {name: p1, type: string, note: 'Tennis/combat variant of home_team (documented example).'}
+      - {name: p2, type: string, note: 'Tennis/combat variant of away_team (documented example).'}
+      - {name: tour, type: string, note: 'Tennis only — atp | wta (documented example).'}
+      - {name: tournament, type: string, note: 'Tennis only (documented example).'}
+      - {name: start_time, type: string, note: 'Tennis variant of match_date (documented example).'}
+      - {name: format, type: string, note: 'Cricket only — test | odi | t20i | franchise (documented).'}
+    sports:
+      unprefixed: soccer
+      prefixed: [tennis, cricket, rugby, baseball, football, basketball, hockey, college-football, college-basketball, mma, boxing]
+  - name: MovementSeries
+    schema_ref: 'inline (getFixtureMovement 200)'
+    description: The Index at the earliest and latest capture inside a window, plus the signed delta.
+    identifier: none (addressed via the parent fixture id)
+    fields:
+      - {name: from, type: object, note: Consensus keys at the start of the window}
+      - {name: to, type: object, note: Consensus keys at the end of the window}
+      - {name: delta_pct, type: object, note: Signed change in probability POINTS, keyed by outcome}
+      - {name: span_hours, type: number}
+  - name: Outright
+    schema_ref: 'inline (listOutrights 200)'
+    description: Tournament-winner probabilities normalised across the field that can still win.
+    identifier: competition slug
+    note: Eliminated entrants are excluded rather than left at a stale price.
+  - name: GolfTournament
+    schema_ref: 'inline (listGolfTournaments / getGolfTournament 200)'
+    identifier: key (slug, e.g. golf_the_open_championship_winner)
+    fields:
+      - {name: key, type: string}
+      - {name: title, type: string}
+      - {name: status, type: string}
+      - {name: skipodds, type: 'Consensus (players[] variant)'}
+    note: The whole field is normalised to exactly 100% and dust quotes are filtered.
+  - name: AlertWebhook
+    schema_ref: 'inline (createAlertWebhook requestBody / listAlertWebhooks 200)'
+    identifier: id (referenced by the documented DELETE /v1/alerts/webhooks/{id}, which is absent from the OpenAPI)
+    fields:
+      - {name: url, type: string, note: HTTPS endpoint. A Discord webhook URL gets a formatted Discord message; anything else gets JSON.}
+      - {name: sport, type: string}
+      - {name: threshold, type: number, note: 'Named `threshold` in the OpenAPI requestBody but `threshold_points` in the docs example — the two disagree.'}
+    limits: 'Slots per tier: Starter 2, Pro 5, Scale 20. Checked every 15 minutes.'
+  - name: IndexMoveEvent
+    schema_ref: 'documented only (https://skipodds.com/docs/alerts)'
+    description: The payload delivered to a registered AlertWebhook.
+    fields:
+      - {name: event, type: string, example: index_move}
+      - {name: sport, type: string}
+      - {name: market, type: string, example: 'Norway v England'}
+      - {name: outcome, type: string}
+      - {name: from, type: number}
+      - {name: to, type: number}
+      - {name: delta_points, type: number}
+      - {name: ts, type: string, format: date-time}
+    note: Not in the OpenAPI and not in any AsyncAPI — see asyncapi/skipodds-webhooks.yml.
+  - name: ResponseEnvelope
+    schema_ref: 'inline (every 200)'
+    description: Wrapper carried by every successful response.
+    fields:
+      - {name: source, type: string, example: SkipOdds}
+      - {name: attribution, type: string, example: 'https://skipodds.com'}
+      - {name: generated_at, type: string, format: date-time}
+      - {name: requests_remaining_today, type: integer}
+      - {name: tier, type: string}
+relationships:
+  - from: Fixture
+    to: Consensus
+    kind: has_one
+    via: skipodds
+    binding: embedded
+  - from: Fixture
+    to: MovementSeries
+    kind: has_many
+    via: id
+    binding: id-reference
+    note: 'GET /v1/fixtures/{id}/movement — the only true id-based traversal in the API.'
+  - from: GolfTournament
+    to: Consensus
+    kind: has_one
+    via: skipodds
+    binding: embedded
+  - from: Outright
+    to: Consensus
+    kind: has_one
+    via: skipodds
+    binding: embedded
+  - from: AlertWebhook
+    to: IndexMoveEvent
+    kind: has_many
+    via: delivery
+    binding: push
+  - from: AlertWebhook
+    to: Fixture
+    kind: references
+    via: 'market (human-readable string, not an id)'
+    binding: weak
+    note: The event payload names the market as free text and carries no fixture id, so an event cannot be joined back to a fixture programmatically.
+  - from: ResponseEnvelope
+    to: Fixture
+    kind: has_many
+    via: fixtures
+    binding: embedded
+identifier_conventions:
+  - {entity: Fixture, form: uuid, prefixed: false, opaque: true}
+  - {entity: GolfTournament, form: snake_case slug, example: golf_the_open_championship_winner}
+  - {entity: Outright, form: kebab-case slug, example: premier-league-2026}
+observations:
+  - Only 2 of 7 entities are named schemas; schema reuse across operations is minimal and the 200 payloads repeat the Consensus shape inline rather than $ref-ing it.
+  - No entity carries a created/updated timestamp; freshness is expressed once per response as generated_at.
+  - The polymorphic Consensus (home/draw/away vs p1/p2 vs players[]) is the single biggest modelling gap between the spec and the live API.

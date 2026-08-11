@@ -1,0 +1,140 @@
+generated: '2026-08-11'
+method: searched
+source: >-
+  https://skipodds.com/docs, /docs/fixtures, /docs/movement, /docs/outrights, /docs/alerts,
+  /docs/limits, /docs/widget, https://skipodds.com/openapi.json, and one live anonymous response
+summary: >-
+  A small, deliberately uniform read API. One response envelope across all 13 sports, one auth header,
+  one metering unit (daily requests), and a single-object error body. Two things an integrator must
+  know that are NOT in the OpenAPI: there is no idempotency mechanism of any kind, and the rate-limit
+  signal lives in the response body rather than in headers.
+authentication:
+  styles: [http_bearer, api_key_header]
+  preferred: 'Authorization: Bearer <key>'
+  accepted_legacy: 'x-api-key: <key>'
+  query_string_keys: forbidden
+  explicit_guidance: >-
+    The docs and the OpenAPI description both say the key must never be placed in the query string.
+    Note the OpenAPI still declares an optional `x-api-key` HEADER parameter on every operation in
+    addition to the components.securitySchemes entry — a duplicate declaration, not a second mechanism.
+  anonymous_access: >-
+    Both the REST API (via the published demo key) and the MCP server answer without credentials on a
+    shared demo quota.
+  see: authentication/skipodds-authentication.yml
+idempotency:
+  documented: false
+  supported: false
+  notes: >-
+    No Idempotency-Key header, no request-id de-duplication, and no retry-safety statement anywhere in
+    the docs or the OpenAPI. Ten of the eleven published operations are GET and therefore naturally
+    safe to retry; the single mutating operation, POST /v1/alerts/webhooks, has no de-duplication
+    guarantee documented, so a retried registration should be assumed to create a second webhook.
+pagination:
+  style: limit-only
+  cursor: false
+  params:
+    - name: limit
+      applies_to: [listFixtures, listSportFixtures]
+      range: 1-50
+      default: 25
+      note: >-
+        The OpenAPI declares the default (25) but not the 1–50 range, which is documented only in prose
+        at /docs/fixtures. The MCP tool defaults limit to 10 instead.
+  response_fields: []
+  notes: >-
+    There is no offset, page, cursor or next-link. The collection is bounded by kickoff window rather
+    than by paging — the docs describe fixtures rolling off the board 6–12 hours after kickoff
+    depending on sport. Callers widen coverage by raising `limit`, not by paging.
+filtering:
+  - param: competition
+    applies_to: [listFixtures, listOutrights]
+    note: Soccer-only competition slug, e.g. premier-league-2026. Ignored for other sports.
+  - param: sport
+    style: path segment
+    note: >-
+      Soccer is the unprefixed default (/v1/fixtures); every other sport names itself in the path
+      (/v1/{sport}/fixtures). The MCP surface expresses the same thing as an enum argument.
+  - param: hours
+    applies_to: [getFixtureMovement, getSportFixtureMovement]
+    default: 24
+    max: 72
+    max_on_scale: 336
+response_envelope:
+  shape: object
+  common_fields:
+    - source
+    - attribution
+    - generated_at
+    - requests_remaining_today
+    - tier
+  payload_key_varies_by_operation: true
+  payload_keys: [fixtures, fixture, outrights, tournament, tournaments, webhooks]
+  notes: >-
+    Every response carries its own attribution URL and a generated_at timestamp. The probability object
+    is always keyed `skipodds` and its inner keys vary by market shape — home/draw/away for team sports
+    that price a draw, home/away for moneyline sports, p1/p2 for tennis and combat sports, and
+    players[] for golf. Probabilities are documented to sum to exactly 1.
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  user_defined: false
+request_id_tracing:
+  supported: false
+  notes: No request-id or correlation-id header is documented or observed on a live response.
+versioning:
+  scheme: uri-path
+  current: v1
+  in_spec: 'info.version 1.0.0'
+  notes: All paths are prefixed /v1. No version header, no date-pinning, no published policy for moving off v1.
+  see: lifecycle/skipodds-lifecycle.yml
+errors:
+  envelope: '{"error": "<slug>"}'
+  format: custom
+  rfc9457: false
+  content_type: application/json
+  see: errors/skipodds-problem-types.yml
+rate_limiting:
+  unit: requests per day per key
+  signal: response body field requests_remaining_today (NOT headers)
+  exhaustion_status: 429
+  see: rate-limits/skipodds-rate-limits.yml
+caching:
+  response_cache: 'cache-control: public, s-maxage=60, max-age=60'
+  observed: true
+  notes: ~60s edge cache, stated in the docs and confirmed on a live response. Cloudflare-fronted.
+cors:
+  allow_origin: '*'
+  allow_methods: [GET, POST, OPTIONS]
+  allow_headers: [x-api-key, content-type, authorization, mcp-protocol-version, mcp-session-id]
+  notes: >-
+    Browser-callable directly. The allow-headers list advertising mcp-protocol-version and
+    mcp-session-id is what first evidenced the MCP server on this host.
+identifiers:
+  fixture_id:
+    type: uuid
+    opaque: true
+    guidance: >-
+      Documented as opaque — "do not construct or guess one". Ids must be taken from a fixtures listing.
+  golf_tournament_key:
+    type: slug
+    example: golf_the_open_championship_winner
+  competition:
+    type: slug
+    example: premier-league-2026
+    discovery: Slugs are only discoverable by calling the fixtures listing without a competition filter.
+attribution:
+  required_on: [Demo, Free]
+  requirement: A visible credit linking to https://skipodds.com wherever the numbers render.
+  required_on_paid: false
+  notes: >-
+    An unusual and load-bearing convention: attribution is a licence term of the free tiers, restated in
+    the response body (`attribution` field), the terms of service, and the MCP server instructions.
+cross_links:
+  authentication: authentication/skipodds-authentication.yml
+  errors: errors/skipodds-problem-types.yml
+  lifecycle: lifecycle/skipodds-lifecycle.yml
+  rate_limits: rate-limits/skipodds-rate-limits.yml
+  mcp: mcp/skipodds-mcp.yml
+  data_model: data-model/skipodds-data-model.yml

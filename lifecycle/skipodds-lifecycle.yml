@@ -1,0 +1,101 @@
+generated: '2026-08-11'
+method: searched
+source: >-
+  https://skipodds.com/docs, https://skipodds.com/terms, https://skipodds.com/#pricing, and probes of
+  /status, /changelog, /blog on the provider host
+summary: >-
+  The operational-transparency surface is essentially empty. SkipOdds publishes a versioned URI path
+  and a terms-of-service effective date, and nothing else: no status page, no changelog or release
+  notes, no deprecation or sunset policy, no public SLA, and no blog or roadmap. Several beta feeds are
+  labelled as such in the docs, but there is no published statement of what beta means for stability.
+versioning:
+  scheme: uri-path
+  current: v1
+  spec_version: 1.0.0
+  docs: https://skipodds.com/docs
+  policy_published: false
+  notes: Every path is prefixed /v1. No versioning policy, no header-based or date-based pinning.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  notes: >-
+    No deprecation policy, no Sunset/Deprecation header support documented or observed. The terms say
+    material changes to the TERMS are announced by email to active subscribers; that is a contract
+    notice, not an API deprecation policy.
+deprecated_operations: []
+status_page:
+  url: null
+  published: false
+  probes:
+    - url: https://skipodds.com/status
+      status: 404
+  notes: >-
+    No status page at the conventional path and none linked from the site, docs, or footer. Uptime is
+    unobservable to an integrator.
+sla:
+  url: null
+  uptime_target: null
+  notes: >-
+    An SLA is named only as an Enterprise inclusion on the pricing page ("Historical data, more
+    competitions, SLA — talk to us"). No SLA document is published and no target is stated for any
+    self-serve tier.
+changelog:
+  url: null
+  published: false
+  probes:
+    - url: https://skipodds.com/changelog
+      status: 404
+  notes: >-
+    No dated changelog, release notes, or version history anywhere on the site. No changelog/ artifact
+    is written for this provider because there is nothing to capture.
+roadmap:
+  url: null
+  published: false
+  stated_intent:
+    - 'Golf: "The four majors on the current feed; weekly tour events planned." (https://skipodds.com/docs/outrights)'
+    - 'Seasonal markets for ball sports "flow automatically once each season opens." (https://skipodds.com/docs/fixtures)'
+  notes: Forward-looking sentences in the reference, not a roadmap.
+maturity_labels:
+  beta:
+    - tennis
+    - baseball
+    - football
+    - basketball
+    - hockey
+    - college-football
+    - college-basketball
+    - cricket
+    - rugby
+    - mma
+    - boxing
+    - golf
+  general_availability:
+    - soccer
+  notes: >-
+    The docs mark every non-soccer sport family "(beta)" — tennis, the ball sports, cricket and rugby,
+    MMA and boxing, and golf. That is 12 of 13 sports. No definition of beta, no graduation criteria,
+    and no distinction is carried into the OpenAPI, where all operations are undifferentiated.
+retirement_signals:
+  data_expiry:
+    note: >-
+      Fixtures roll off the board on a documented clock — 6h after kickoff for soccer and tennis, 8h for
+      basketball, baseball, hockey, American football, MMA and boxing, 12h for cricket and rugby. This
+      is resource lifecycle, not API lifecycle, but it is the only expiry rule the provider publishes.
+  webhook_deactivation:
+    note: Endpoints failing 10 consecutive deliveries are deactivated automatically (https://skipodds.com/docs/alerts).
+legal_dates:
+  terms_effective: '2026-07-08'
+  privacy_effective: '2026-07-08'
+operator:
+  company: SkipSeek Inc.
+  parent_site: https://skipseek.ai
+  sibling_products:
+    - https://skipseek.com
+    - https://wundergoal.com
+cross_links:
+  conventions: conventions/skipodds-conventions.yml
+  plans: plans/skipodds-plans-pricing.yml
+  rate_limits: rate-limits/skipodds-rate-limits.yml

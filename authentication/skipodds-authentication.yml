@@ -1,0 +1,71 @@
+generated: '2026-08-11'
+method: searched
+source: openapi/skipodds-openapi.yml
+docs: https://skipodds.com/docs
+summary:
+  types:
+    - apiKey
+    - http
+  api_key_in:
+    - header
+  oauth2_flows: []
+  model: static-api-key
+  note: >-
+    One credential, two accepted transports. Both schemes carry the SAME static API key — Bearer is the
+    preferred transport and x-api-key is retained for existing integrations. There is no OAuth, no token
+    exchange, no refresh, no expiry, and no scopes, so no scopes/ artifact is written for this provider.
+schemes:
+  - name: BearerAuth
+    type: http
+    scheme: bearer
+    description: 'Preferred. Send the API key as `Authorization: Bearer <key>`.'
+    sources:
+      - openapi/skipodds-openapi.yml
+    applies_to: all 11 operations (global security)
+  - name: ApiKeyHeader
+    type: apiKey
+    in: header
+    parameter: x-api-key
+    description: Accepted for existing integrations.
+    sources:
+      - openapi/skipodds-openapi.yml
+    applies_to: all 11 operations (global security)
+prohibited_transports:
+  - transport: query string
+    statement: >-
+      "Never put a key in the query string" — stated in the OpenAPI info.description, on every docs
+      page header, and again on https://skipodds.com/mcp ("anything in a link is in somebody's logs").
+anonymous_access:
+  supported: true
+  mechanism: >-
+    Calls with no credential fall onto a published shared demo key, skipodds-demo-2026, at 100
+    requests/day shared across ALL anonymous callers. This applies to both the REST API and the MCP
+    server at https://skipodds.com/mcp, which was confirmed to answer tools/list with no Authorization
+    header at all.
+  see: sandbox/skipodds-sandbox.yml
+key_issuance:
+  free_personal_key: https://skipodds.com/#free
+  method: Self-serve form on the homepage (POSTs to /free-key); email delivery via Resend. No card.
+  paid_keys: Issued on Stripe checkout; the subscriber email comes from Stripe.
+  rotation: not documented
+  revocation: >-
+    The terms reserve the right to throttle, suspend, or revoke keys that exceed limits or attempt to
+    circumvent quotas. No self-serve rotation or revocation surface is published.
+  sharing: 'Keys are personal to the subscriber and may not be shared or resold (https://skipodds.com/terms).'
+failure_mode:
+  status: 401
+  body: '{"error": "invalid_api_key"}'
+  www_authenticate_header: false
+  note: >-
+    No WWW-Authenticate challenge is returned, so a 401 is not discoverable by an RFC 6750 client — the
+    caller has to parse the body.
+gaps:
+  - No OAuth 2.0 or OIDC; /.well-known/oauth-authorization-server and /.well-known/openid-configuration both 404.
+  - No scopes or permission model — a key is all-or-nothing across every operation.
+  - No key expiry, rotation endpoint, or published rotation guidance.
+  - No mTLS, no request signing, no IP allow-listing.
+  - The OpenAPI redundantly declares x-api-key as an optional header PARAMETER on every operation in addition to the securityScheme, which will produce a duplicate argument in generated clients.
+cross_links:
+  conventions: conventions/skipodds-conventions.yml
+  sandbox: sandbox/skipodds-sandbox.yml
+  rate_limits: rate-limits/skipodds-rate-limits.yml

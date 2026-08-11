@@ -1,0 +1,92 @@
+generated: '2026-08-11'
+method: searched
+source: https://skipodds.com/docs/alerts + openapi/skipodds-openapi.yml (createAlertWebhook, listAlertWebhooks)
+type: Webhooks
+asyncapi_published: false
+summary: >-
+  SkipOdds publishes NO AsyncAPI document — /asyncapi.yaml, /asyncapi.json and an event catalogue were
+  all absent, and the OpenAPI declares no `webhooks` object. It does operate a real, documented outbound
+  webhook surface: one event type, index_move, fired when the de-vigged consensus moves past a
+  subscriber-set threshold. This artifact captures that catalogue as published; nothing here is
+  synthesised into a spec the provider does not ship.
+event_surface:
+  style: outbound webhook (HTTP POST)
+  delivery: push
+  polling_alternative: 'GET /v1/fixtures/{id}/movement'
+  availability: paid tiers only (Starter and above)
+  check_interval: every 15 minutes across upcoming events in the chosen sport
+  scope: one registration = one sport
+subscription:
+  register:
+    operation: createAlertWebhook
+    http: POST /v1/alerts/webhooks
+    spec: openapi/skipodds-openapi.yml#createAlertWebhook
+    body:
+      url: HTTPS endpoint to receive the event
+      sport: sport to watch
+      threshold_points: >-
+        Minimum move in probability POINTS, 1-20, default 3. A move from 58.0% to 61.5% is +3.5 points.
+        NOTE: the docs call this field threshold_points; the OpenAPI requestBody calls it `threshold`
+        and declares no range or default. The two published sources disagree.
+  list:
+    operation: listAlertWebhooks
+    http: GET /v1/alerts/webhooks
+    spec: openapi/skipodds-openapi.yml#listAlertWebhooks
+  delete:
+    http: DELETE /v1/alerts/webhooks/{id}
+    documented_at: https://skipodds.com/docs/alerts
+    in_openapi: false
+    note: Documented in the reference but absent from the published OpenAPI.
+  slots_per_tier:
+    Starter: 2
+    Pro: 5
+    Scale: 20
+events:
+  - name: index_move
+    description: The SkipOdds Index for one outcome moved by at least the subscriber's threshold.
+    trigger: Consensus probability change >= threshold_points, evaluated on a 15-minute cycle.
+    payload_example:
+      event: index_move
+      sport: soccer
+      market: Norway v England
+      outcome: Norway
+      from: 0.231
+      to: 0.268
+      delta_points: 3.7
+      ts: '2026-07-11T18:15:00.000Z'
+    payload_fields:
+      - {name: event, type: string, const: index_move}
+      - {name: sport, type: string}
+      - {name: market, type: string, note: Human-readable fixture name. No fixture id is included.}
+      - {name: outcome, type: string}
+      - {name: from, type: number, note: Probability before the move (0-1).}
+      - {name: to, type: number, note: Probability after the move (0-1).}
+      - {name: delta_points, type: number, note: Signed change in probability points.}
+      - {name: ts, type: string, format: date-time}
+transport_targets:
+  - target: Discord
+    behaviour: A Discord webhook URL receives a pre-formatted Discord message rather than the raw JSON.
+  - target: generic HTTPS endpoint
+    behaviour: Receives the JSON payload above.
+reliability:
+  retries: not documented
+  deactivation: Endpoints failing 10 deliveries in a row are deactivated automatically.
+  replay: not offered
+  ordering: not documented
+security:
+  signature: none documented
+  shared_secret: none documented
+  verification: >-
+    No HMAC signature header, no timestamp-signature scheme, and no source IP range is published. A
+    receiver has no published way to verify that a delivery genuinely originated from SkipOdds. This is
+    the most significant gap in the event surface.
+  transport: HTTPS endpoint required
+gaps:
+  - No AsyncAPI document, so the event contract is prose-only and not machine-readable.
+  - No signature or shared secret for receiver-side verification.
+  - The event payload carries no fixture id, so an event cannot be joined to a fixture programmatically.
+  - threshold vs threshold_points disagreement between the OpenAPI and the docs.
+  - DELETE /v1/alerts/webhooks/{id} is documented but not in the OpenAPI.
+probes:
+  - {url: 'https://skipodds.com/asyncapi.yaml', status: 404}
+  - {url: 'https://skipodds.com/asyncapi.json', status: 404}

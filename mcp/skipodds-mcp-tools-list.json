@@ -1,0 +1,285 @@
+{
+ "jsonrpc": "2.0",
+ "id": 1,
+ "result": {
+  "tools": [
+   {
+    "name": "list_fixtures",
+    "title": "List fixtures",
+    "annotations": {
+     "title": "List fixtures",
+     "readOnlyHint": true,
+     "openWorldHint": true
+    },
+    "description": "Upcoming and recent fixtures with fair win probabilities: every surveyed bookmaker price averaged and stripped of its margin (de-vigged), so probabilities sum to exactly 100%. 13 sports, 69+ bookmakers. START HERE — the fixture ids returned are what get_fixture and get_fixture_movement require. Use get_fixture instead when you already hold an id, and list_tournament_outrights for who-wins-the-competition rather than individual matches. \"recent\" means a kickoff within the last 6 hours for soccer and tennis, 8 hours for basketball, baseball, hockey, American football, MMA and boxing, and 12 hours for cricket and rugby; anything older has rolled off the board. Outright/tournament-winner markets exist for soccer and golf only — every other sport is fixture-level. Read-only. Returns an empty list, not an error, when nothing is scheduled in range.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "sport": {
+       "type": "string",
+       "enum": [
+        "tennis",
+        "cricket",
+        "rugby",
+        "baseball",
+        "football",
+        "basketball",
+        "hockey",
+        "college-football",
+        "college-basketball",
+        "mma",
+        "boxing"
+       ],
+       "description": "Which sport to query. Omit entirely for soccer, which is the default; every other sport must be named explicitly. Note \"football\" means American football and \"rugby\" covers union."
+      },
+      "competition": {
+       "type": "string",
+       "description": "Restrict to one soccer competition by slug, e.g. \"premier-league-2026\". Soccer only — ignored for other sports. Slugs appear on the fixtures this tool returns, so call once without it to discover them."
+      },
+      "limit": {
+       "type": "integer",
+       "minimum": 1,
+       "default": 10,
+       "description": "Maximum fixtures to return. Defaults to 10; raise it to widen the window rather than calling repeatedly."
+      }
+     }
+    },
+    "outputSchema": {
+     "type": "object",
+     "properties": {
+      "source": {
+       "type": "string"
+      },
+      "fixtures": {
+       "type": "array",
+       "description": "One entry per fixture. Empty when nothing is scheduled in range — not an error.",
+       "items": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string",
+          "description": "Pass to get_fixture or get_fixture_movement."
+         },
+         "status": {
+          "type": "string"
+         },
+         "skipodds": {
+          "type": "object",
+          "description": "De-vigged probabilities for this market. Keys vary by sport: home/draw/away for team sports, p1/p2 for tennis and fights, players[] for golf.",
+          "properties": {
+           "fair_odds": {
+            "type": "object",
+            "description": "Decimal odds equivalent of each probability."
+           },
+           "books_surveyed": {
+            "type": "integer",
+            "description": "Distinct bookmaker brands averaged."
+           },
+           "margin_removed": {
+            "type": "number",
+            "description": "Bookmaker margin stripped, as a decimal (0.052 = 5.2%)."
+           }
+          },
+          "additionalProperties": true
+         }
+        },
+        "additionalProperties": true
+       }
+      }
+     },
+     "required": [
+      "fixtures"
+     ],
+     "additionalProperties": true
+    }
+   },
+   {
+    "name": "get_fixture",
+    "title": "Get one fixture",
+    "annotations": {
+     "title": "Get one fixture",
+     "readOnlyHint": true,
+     "openWorldHint": true
+    },
+    "description": "One fixture in full: fair probability and fair odds for every outcome, how many bookmakers were surveyed, and when the consensus last updated. Use when you already have a fixture id; call list_fixtures first if you do not. Use get_fixture_movement instead when you need how the price CHANGED rather than where it stands now. Read-only. An id that is unknown or has rolled off the board returns a fixture_not_found error rather than an empty fixture, and a low bookmaker count means a thin market rather than a failure.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "id": {
+       "type": "string",
+       "description": "Fixture id, exactly as returned by list_fixtures. An opaque string — never construct, guess, or derive one from team names or dates; ids are not stable across sports namespaces."
+      },
+      "sport": {
+       "type": "string",
+       "enum": [
+        "tennis",
+        "cricket",
+        "rugby",
+        "baseball",
+        "football",
+        "basketball",
+        "hockey",
+        "college-football",
+        "college-basketball",
+        "mma",
+        "boxing"
+       ],
+       "description": "Which sport to query. Omit entirely for soccer, which is the default; every other sport must be named explicitly. Note \"football\" means American football and \"rugby\" covers union."
+      }
+     },
+     "required": [
+      "id"
+     ]
+    },
+    "outputSchema": {
+     "type": "object",
+     "description": "One fixture with its current consensus.",
+     "properties": {
+      "id": {
+       "type": "string"
+      },
+      "status": {
+       "type": "string"
+      },
+      "skipodds": {
+       "type": "object",
+       "description": "De-vigged probabilities for this market. Keys vary by sport: home/draw/away for team sports, p1/p2 for tennis and fights, players[] for golf.",
+       "properties": {
+        "fair_odds": {
+         "type": "object",
+         "description": "Decimal odds equivalent of each probability."
+        },
+        "books_surveyed": {
+         "type": "integer",
+         "description": "Distinct bookmaker brands averaged."
+        },
+        "margin_removed": {
+         "type": "number",
+         "description": "Bookmaker margin stripped, as a decimal (0.052 = 5.2%)."
+        }
+       },
+       "additionalProperties": true
+      }
+     },
+     "additionalProperties": true
+    }
+   },
+   {
+    "name": "get_fixture_movement",
+    "title": "Fixture line movement",
+    "annotations": {
+     "title": "Fixture line movement",
+     "readOnlyHint": true,
+     "openWorldHint": true
+    },
+    "description": "Time series of how one fixture's fair probabilities moved — timestamped consensus snapshots, oldest first. Use to spot line movement, steam or drift, and to answer \"has this shortened since yesterday\". Use get_fixture instead for the current price alone. Read-only. An unknown id returns a fixture_not_found error; a series with only one or two snapshots means the fixture was surveyed recently, not that the request failed.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "id": {
+       "type": "string",
+       "description": "Fixture id, exactly as returned by list_fixtures. Opaque — do not construct or guess one."
+      },
+      "sport": {
+       "type": "string",
+       "enum": [
+        "tennis",
+        "cricket",
+        "rugby",
+        "baseball",
+        "football",
+        "basketball",
+        "hockey",
+        "college-football",
+        "college-basketball",
+        "mma",
+        "boxing"
+       ],
+       "description": "Which sport to query. Omit entirely for soccer, which is the default; every other sport must be named explicitly. Note \"football\" means American football and \"rugby\" covers union."
+      },
+      "hours": {
+       "type": "integer",
+       "minimum": 1,
+       "default": 24,
+       "description": "How far back to look, in hours. Defaults to 24. Capped at 72 on free and paid tiers below Scale, 336 on Scale; a larger value is clamped rather than rejected."
+      }
+     },
+     "required": [
+      "id"
+     ]
+    },
+    "outputSchema": {
+     "type": "object",
+     "description": "De-vigged consensus at the start and end of the window, and the signed change.",
+     "properties": {
+      "from": {
+       "type": "object",
+       "description": "Probabilities at the earliest capture in the window."
+      },
+      "to": {
+       "type": "object",
+       "description": "Probabilities at the latest capture."
+      },
+      "delta_pct": {
+       "type": "object",
+       "description": "Signed change in PERCENTAGE POINTS, not percent."
+      },
+      "span_hours": {
+       "type": "number",
+       "description": "Hours actually covered, which can be less than requested."
+      }
+     },
+     "additionalProperties": true
+    }
+   },
+   {
+    "name": "list_tournament_outrights",
+    "title": "Tournament winner probabilities",
+    "annotations": {
+     "title": "Tournament winner probabilities",
+     "readOnlyHint": true,
+     "openWorldHint": true
+    },
+    "description": "Outright winner probabilities for a soccer competition, normalised across the teams that can still win — eliminated teams are dropped, so the field sums to 100% of the live market. Use for \"who wins the league/cup\"; use list_fixtures for individual matches. SOCCER ONLY — call list_golf_tournaments for golf. The other eleven sports have no outright market in this API at all, so for them list_fixtures is the only option; say so rather than retrying with a sport argument. Read-only. An unrecognised competition slug returns an empty field rather than an error.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "competition": {
+       "type": "string",
+       "description": "Competition slug, e.g. \"premier-league-2026\". Omit to get every competition currently priced, which is also how you discover valid slugs."
+      }
+     }
+    },
+    "outputSchema": {
+     "type": "object",
+     "description": "Outright winner probabilities normalised across the still-alive field.",
+     "additionalProperties": true
+    }
+   },
+   {
+    "name": "list_golf_tournaments",
+    "title": "Golf tournaments",
+    "annotations": {
+     "title": "Golf tournaments",
+     "readOnlyHint": true,
+     "openWorldHint": true
+    },
+    "description": "Golf outright-winner probabilities, normalised across the priced field. Call with NO arguments to list the tournaments currently priced together with their tournament_key values; call again passing tournament_key to get that one tournament with its full player field. GOLF ONLY — use list_tournament_outrights for soccer competitions. Read-only. Between tournaments the no-argument call returns an empty list, which means nothing is currently priced rather than an error; an unrecognised tournament_key returns a tournament_not_found error.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tournament_key": {
+       "type": "string",
+       "description": "Identifies one tournament, taken verbatim from a no-argument call to this same tool. Omit it to get the list. This is NOT an API key — credentials go in the Authorization header."
+      }
+     }
+    },
+    "outputSchema": {
+     "type": "object",
+     "description": "Golf tournaments, or one tournament with its full player field when tournament_key is given.",
+     "additionalProperties": true
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,103 @@
+generated: '2026-08-11'
+method: derived
+source: mcp/skipodds-mcp-tools-list.json + openapi/skipodds-openapi.yml
+summary: >-
+  SkipOdds exposes the same de-vigged-probability core through two surfaces: a public OpenAPI 3.0.3
+  REST contract (11 operations) and a stateless streamable-http MCP server (5 tools). Both were read
+  live and anonymously, so every binding below is grounded in a real inputSchema and a real
+  operationId — none is inferred from naming alone. The MCP surface is a deliberate SUBSET: it folds
+  the sport-prefixed REST operations into a `sport` enum parameter and omits the webhook-management
+  operations entirely, which is consistent with every MCP tool being annotated readOnlyHint: true.
+surfaces:
+  openapi:
+    file: openapi/skipodds-openapi.yml
+    original: openapi/_original/skipodds-openapi.json
+    served_at: https://skipodds.com/openapi.json
+    gated: false
+    operations: 11
+  mcp:
+    url: https://skipodds.com/mcp
+    transport: streamable-http
+    gated: false
+    note: tools/list answers with no credentials; anonymous callers share the demo quota.
+    tools: 5
+  graphql:
+    present: false
+crosswalk:
+  - tool: list_fixtures
+    category: fixtures
+    rest:
+      - listFixtures
+      - listSportFixtures
+    binding: rest
+    confidence: high
+    note: >-
+      One tool fans out over two REST operations. Omitting `sport` maps to GET /v1/fixtures (soccer);
+      supplying it maps to GET /v1/{sport}/fixtures. The tool's `competition` and `limit` parameters
+      are the same query parameters the REST operations declare, though the tool defaults limit to 10
+      where the REST operation defaults to 25.
+  - tool: get_fixture
+    category: fixtures
+    rest:
+      - getFixture
+      - getSportFixture
+    binding: rest
+    confidence: high
+    note: Same soccer-vs-sport fan-out; `id` is the opaque fixture id returned by list_fixtures.
+  - tool: get_fixture_movement
+    category: movement
+    rest:
+      - getFixtureMovement
+      - getSportFixtureMovement
+    binding: rest
+    confidence: high
+    note: >-
+      `hours` is the REST `hours` query parameter. The docs cap it at 72 below the Scale tier and 336
+      on Scale; neither cap is expressed in the OpenAPI schema.
+  - tool: list_tournament_outrights
+    category: outrights
+    rest:
+      - listOutrights
+    binding: rest
+    confidence: high
+    note: Soccer-only, matching GET /v1/outrights. Its `competition` parameter is the REST query parameter.
+  - tool: list_golf_tournaments
+    category: outrights
+    rest:
+      - listGolfTournaments
+      - getGolfTournament
+    binding: rest
+    confidence: high
+    note: >-
+      Two REST operations collapsed into one tool by an optional argument: called with no arguments it
+      is GET /v1/golf/tournaments; called with `tournament_key` it is GET /v1/golf/tournaments/{key}.
+mcp_only: []
+rest_only:
+  - operation: listAlertWebhooks
+    capability: webhook-management
+    reason: >-
+      No MCP tool. Every published tool carries readOnlyHint: true, so the write/administration
+      surface is REST-only by design.
+  - operation: createAlertWebhook
+    capability: webhook-management
+    reason: >-
+      No MCP tool. This is the only non-GET operation in the OpenAPI and the only one that mutates
+      state; the MCP server exposes nothing that registers a webhook.
+coverage:
+  mcp_tools_named: 5
+  mcp_tools_bound: 5
+  mcp_only: 0
+  rest_operations_total: 11
+  rest_operations_with_a_tool: 9
+  rest_operations_without_a_tool: 2
+divergences:
+  - kind: parameter-default
+    detail: list_fixtures defaults limit to 10; REST listFixtures defaults it to 25.
+  - kind: undocumented-in-spec
+    detail: >-
+      The `hours` tier caps (72 / 336) and the sport enum are documented on the MCP tool schema and in
+      the docs but are absent from the OpenAPI parameter schemas.
+  - kind: rest-only-surface
+    detail: >-
+      DELETE /v1/alerts/webhooks/{id} is documented at https://skipodds.com/docs/alerts but is NOT in
+      the published OpenAPI, so it appears in neither surface's machine-readable contract.

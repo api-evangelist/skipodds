@@ -1,0 +1,54 @@
+generated: '2026-08-11'
+method: searched
+source: >-
+  https://skipodds.com/openapi.json (info.description), https://skipodds.com/docs,
+  https://skipodds.com/mcp, https://skipodds.com/#pricing
+summary: >-
+  There is no separate sandbox or test environment. SkipOdds evaluates against PRODUCTION using a
+  published shared demo key — the same host, the same data, the same endpoints, just a smaller daily
+  quota. That is a deliberate design choice the provider states plainly: the demos "aren't mockups;
+  they're production". There are no test fixtures, no mock ids, no time simulation, and no separate
+  test-key prefix — a demo response and a paid response are byte-identical apart from the `tier` and
+  `requests_remaining_today` fields.
+model: production-with-demo-key
+separate_host: false
+separate_key_prefix: false
+test_credentials:
+  - kind: shared demo API key
+    value: skipodds-demo-2026
+    published_at:
+      - https://skipodds.com/openapi.json
+      - https://skipodds.com/docs
+      - https://skipodds.com/ (homepage curl example)
+    quota: 100 requests/day, shared across ALL anonymous callers
+    attribution_required: true
+    note: >-
+      Published verbatim by the provider in its own OpenAPI description. Applies automatically on the
+      MCP server when no Authorization header is sent.
+  - kind: free personal API key
+    value: null
+    signup: https://skipodds.com/#free
+    quota: 250 requests/day, not shared
+    attribution_required: true
+    note: Self-serve, no card. The value is issued per user, so none is published.
+usage:
+  rest_example: 'curl https://skipodds.com/v1/fixtures -H "x-api-key: skipodds-demo-2026"'
+  rest_example_preferred: 'curl https://skipodds.com/v1/fixtures -H "Authorization: Bearer skipodds-demo-2026"'
+  mcp_example: >-
+    Add {"mcpServers":{"skipodds":{"type":"streamable-http","url":"https://skipodds.com/mcp"}}} with no
+    headers block to run anonymously on the demo quota.
+  widget_example: '<div data-skipodds data-sport="soccer" data-limit="5"></div><script async src="https://skipodds.com/widget.js"></script>'
+  widget_note: The embeddable widget requires no key at all — the lowest-friction evaluation path.
+what_is_not_provided:
+  - No separate sandbox host or base URL.
+  - No test/live key prefixes distinguishing environments.
+  - No fixture/trigger tooling to force a given match state or probability.
+  - No time simulation or test clocks — line-movement history is real elapsed time only.
+  - No way to test the webhook/alerts surface without a paid tier; alerts are paid-tier only and there is no simulated delivery.
+verified:
+  - url: https://skipodds.com/v1/fixtures?limit=1
+    status: 200
+    fetched: '2026-08-11'
+    note: >-
+      Called anonymously with the published demo key as a Bearer token; returned live production data
+      with tier "standard" and requests_remaining_today 90.

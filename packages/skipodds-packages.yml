@@ -1,0 +1,58 @@
+generated: '2026-08-11'
+method: searched
+source: >-
+  npm registry search, PyPI, RubyGems, crates.io, GitHub code/org search, jsDelivr data API, and the
+  SkipOdds docs (https://skipodds.com/docs, https://skipodds.com/docs/widget)
+summary: >-
+  SkipOdds publishes NO client SDK in any package registry. The only first-party distributable is the
+  embeddable widget loader, served straight from the provider's own origin with no registry entry and
+  no version in the URL. Integrators are expected to call the REST API directly or use the MCP server.
+package_count: 1
+sdk_count: 0
+packages:
+  - language: javascript
+    registry: cdn
+    name: skipodds-widget
+    kind: embed-loader
+    url: https://skipodds.com/widget.js
+    install: '<script async src="https://skipodds.com/widget.js"></script>'
+    official: true
+    version: null
+    published: null
+    note: >-
+      Unpinned, unversioned, and served with `cache-control: no-store` from the provider's own origin
+      — there is no registry metadata endpoint to query and no version token anywhere in the URL, so a
+      consumer cannot tell which build they are executing either. That is the finding, not a gap in
+      our probe. It is a widget loader that injects an iframe pointing at https://skipodds.com/embed,
+      not an API client library — see components/skipodds-components.yml.
+registries_checked:
+  - registry: npm
+    query: skipodds
+    result: 0 packages
+    endpoint: https://registry.npmjs.org/-/v1/search?text=skipodds
+    status: 200
+  - registry: pypi
+    query: skipodds
+    result: not found
+    endpoint: https://pypi.org/pypi/skipodds/json
+    status: 404
+  - registry: rubygems
+    query: skipodds
+    result: not found
+    endpoint: https://rubygems.org/api/v1/gems/skipodds.json
+    status: 404
+  - registry: crates.io
+    query: skipodds
+    result: 0 crates
+    status: 200
+  - registry: jsdelivr
+    query: skipodds
+    result: not found
+    endpoint: https://data.jsdelivr.com/v1/packages/npm/skipodds
+    status: 404
+  - registry: github
+    query: skipodds
+    result: >-
+      No provider-owned organization or repository. The only public repo matching the term is
+      api-evangelist/skipodds — this profile. github.com/skipseek, /skipodds and /skipseek-ai all 404.
+    status: 200

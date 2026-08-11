@@ -1,0 +1,83 @@
+generated: '2026-08-11'
+method: searched
+source: https://skipodds.com/#pricing + https://skipodds.com/docs/limits + https://skipodds.com/docs
+docs: https://skipodds.com/docs/limits
+summary: >-
+  Rate limiting is a single per-key DAILY request quota, set by billing tier. There is no per-second,
+  per-minute or per-endpoint limit published, and no burst allowance. The runtime signal is unusual and
+  worth an integrator's attention: SkipOdds returns NO RateLimit-* or X-RateLimit-* response headers
+  and no Retry-After — the remaining allowance is carried in the RESPONSE BODY as
+  `requests_remaining_today`, alongside a `tier` string. An agent that watches headers will see nothing;
+  it has to read the body.
+limit_count: 5
+limits:
+  - scope: per-key (shared demo key)
+    tier: Demo
+    window: 1 day
+    limit: 100
+    burst: null
+    note: The demo key skipodds-demo-2026 is shared across all anonymous callers, including anonymous MCP callers.
+  - scope: per-key
+    tier: Free
+    window: 1 day
+    limit: 250
+    burst: null
+  - scope: per-key
+    tier: Starter
+    window: 1 day
+    limit: 5000
+    burst: null
+  - scope: per-key
+    tier: Pro
+    window: 1 day
+    limit: 50000
+    burst: null
+  - scope: per-key
+    tier: Scale
+    window: 1 day
+    limit: 500000
+    burst: null
+signaling:
+  response_headers: []
+  observed_headers_note: >-
+    Live unauthenticated GET https://skipodds.com/v1/fixtures?limit=1 with the published demo key
+    returned 200 with headers: access-control-allow-origin, cache-control: public, s-maxage=60,
+    max-age=60, plus Cloudflare edge headers. No RateLimit-*, X-RateLimit-*, or Retry-After header
+    was present.
+  body_fields:
+    - field: requests_remaining_today
+      type: integer
+      note: Present on every successful response. Observed value 90 on a demo-key call.
+    - field: tier
+      type: string
+      note: Observed value "standard" on a demo-key call.
+  exhaustion:
+    status: 429
+    body: '{"error": "quota_exceeded"}'
+    retry_after_header: false
+    reset: Daily. No reset timestamp is published in the response or the docs.
+  unauthenticated_status:
+    status: 401
+    body: '{"error": "invalid_api_key"}'
+other_limits:
+  - kind: parameter cap
+    detail: 'limit query parameter on fixture listings: 1–50, default 25 (OpenAPI declares only the default).'
+  - kind: tiered lookback
+    detail: >-
+      Line-movement `hours` defaults to 24 and is capped at 72 on Demo/Free/Starter/Pro, 336 (14 days)
+      on Scale. This is a tier-gated data window, not a request limit.
+  - kind: webhook slots
+    detail: Registered movement-alert webhooks — Starter 2, Pro 5, Scale 20. Endpoints failing 10 consecutive deliveries are deactivated.
+  - kind: caching
+    detail: Responses are cached ~60s (cache-control public, s-maxage=60, max-age=60), which bounds how fast a poller can see new data.
+x-evidence:
+  - url: https://skipodds.com/v1/fixtures?limit=1
+    status: 200
+    fetched: '2026-08-11'
+    note: Anonymous probe using the demo key the provider publishes in its own OpenAPI description.
+  - url: https://skipodds.com/docs/limits
+    status: 200
+cross_links:
+  plans: plans/skipodds-plans-pricing.yml
+  conventions: conventions/skipodds-conventions.yml
+  errors: errors/skipodds-problem-types.yml

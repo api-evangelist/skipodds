@@ -1,0 +1,127 @@
+generated: '2026-08-11'
+method: searched
+source: https://skipodds.com/mcp (live JSON-RPC tools/list + initialize) and https://skipodds.com/mcp (docs page)
+status: published
+server:
+  name: skipodds
+  title: SkipOdds
+  version: 1.0.0
+  transport: streamable-http
+  stateless: true
+  url: https://skipodds.com/mcp
+  docs: https://skipodds.com/mcp
+  protocol_version: '2025-06-18'
+  capabilities:
+    tools:
+      listChanged: false
+  instructions: >-
+    Fair sports win probabilities: bookmaker consensus with the margin removed, so probabilities sum
+    to 100%. Start with list_fixtures (omit sport for soccer). Without an API key the shared demo
+    quota applies (100 requests/day, shared by all anonymous callers) — a free personal key gives
+    250/day at https://skipodds.com/#free, passed as a Bearer token. Cite SkipOdds with a link to
+    https://skipodds.com when displaying the numbers.
+authentication:
+  required: false
+  note: >-
+    tools/list and every tool answer with NO credentials at all — anonymous callers fall onto the
+    shared demo key (skipodds-demo-2026, 100 req/day shared across all anonymous callers). A free
+    personal key raises that to 250/day and is passed as `Authorization: Bearer <key>`.
+  scheme: http-bearer
+  see: authentication/skipodds-authentication.yml
+methods_supported:
+  - initialize
+  - tools/list
+methods_absent:
+  - method: prompts/list
+    response: 'JSON-RPC -32601 method not found'
+  - method: resources/list
+    response: 'JSON-RPC -32601 method not found'
+tools:
+  - name: list_fixtures
+    title: List fixtures
+    description: >-
+      Upcoming and recent fixtures with fair win probabilities (de-vigged consensus). START HERE —
+      the fixture ids returned are what get_fixture and get_fixture_movement require.
+    read_only: true
+    open_world: true
+    input:
+      sport:
+        type: string
+        required: false
+        enum: [tennis, cricket, rugby, baseball, football, basketball, hockey, college-football, college-basketball, mma, boxing]
+        note: Omit entirely for soccer, which is the default.
+      competition:
+        type: string
+        required: false
+        note: Soccer only — competition slug, e.g. premier-league-2026.
+      limit:
+        type: integer
+        required: false
+        default: 10
+        minimum: 1
+    source_operation: openapi/skipodds-openapi.yml#listFixtures
+  - name: get_fixture
+    title: Get one fixture
+    description: One fixture in full — fair probability and fair odds per outcome, books surveyed, and when the consensus last updated.
+    read_only: true
+    input:
+      id:
+        type: string
+        required: true
+      sport:
+        type: string
+        required: false
+    source_operation: openapi/skipodds-openapi.yml#getFixture
+  - name: get_fixture_movement
+    title: Fixture line movement
+    description: How one fixture's fair probabilities moved — timestamped snapshots, oldest first, for spotting steam and drift.
+    read_only: true
+    input:
+      id:
+        type: string
+        required: true
+      sport:
+        type: string
+        required: false
+      hours:
+        type: integer
+        required: false
+        note: Defaults to 24; capped at 72 below the Scale tier, 336 on Scale.
+    source_operation: openapi/skipodds-openapi.yml#getFixtureMovement
+  - name: list_tournament_outrights
+    title: Tournament winner probabilities
+    description: Outright winner probabilities for a soccer competition, normalised across the teams that can still win.
+    read_only: true
+    input:
+      competition:
+        type: string
+        required: false
+    source_operation: openapi/skipodds-openapi.yml#listOutrights
+  - name: list_golf_tournaments
+    title: Golf tournaments
+    description: >-
+      Golf outright probabilities — call with no arguments for the tournaments currently priced,
+      then again with a tournament_key for the full field.
+    read_only: true
+    input:
+      tournament_key:
+        type: string
+        required: false
+    source_operation: openapi/skipodds-openapi.yml#listGolfTournaments
+verbatim_manifest: mcp/skipodds-mcp-tools-list.json
+x-evidence:
+  fetched: '2026-08-11'
+  url: https://skipodds.com/mcp
+  method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 200
+  content_type: application/json
+  note: >-
+    Answered anonymously — no Authorization header sent. Also discoverable from the REST API's CORS
+    preflight, which advertises access-control-allow-headers including mcp-protocol-version and
+    mcp-session-id.
+sibling_servers:
+  - name: SkipSeek
+    url: https://skipseek.com/mcp
+    note: >-
+      Named on https://skipodds.com/mcp as the prediction-market sibling server operated by the same
+      company (SkipSeek Inc.). Not probed here — it is a different product surface.

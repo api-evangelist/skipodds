@@ -1,0 +1,88 @@
+generated: '2026-08-11'
+method: searched
+source: openapi/skipodds-openapi.yml (4xx responses) + https://skipodds.com/docs/limits (error reference)
+format: custom
+rfc9457: false
+summary: >-
+  SkipOdds does not use RFC 9457 problem+json. Every error is a flat JSON object with a single `error`
+  key carrying a snake_case slug, served as application/json. There is no type URI, no title, no detail,
+  no instance, and no machine-readable retry hint. Three error conditions are documented; two of them
+  (401, 429) are declared on all eleven OpenAPI operations, and the third (404) is documented in prose
+  only and appears in NO operation's responses block — a real gap between the docs and the contract.
+envelope:
+  content_type: application/json
+  schema:
+    type: object
+    properties:
+      error:
+        type: string
+        description: snake_case error slug
+problems:
+  - status: 401
+    code: invalid_api_key
+    title: Missing or invalid API key
+    remediation: >-
+      Send the key as `Authorization: Bearer <key>`, or the legacy `x-api-key` header. Never in the
+      query string. A free personal key is available at https://skipodds.com/#free; the shared demo key
+      skipodds-demo-2026 is published in the OpenAPI description for evaluation.
+    retryable: false
+    in_spec: true
+    source_operations:
+      - openapi/skipodds-openapi.yml#listFixtures
+      - openapi/skipodds-openapi.yml#getFixture
+      - openapi/skipodds-openapi.yml#getFixtureMovement
+      - openapi/skipodds-openapi.yml#listOutrights
+      - openapi/skipodds-openapi.yml#listSportFixtures
+      - openapi/skipodds-openapi.yml#getSportFixture
+      - openapi/skipodds-openapi.yml#getSportFixtureMovement
+      - openapi/skipodds-openapi.yml#listGolfTournaments
+      - openapi/skipodds-openapi.yml#getGolfTournament
+      - openapi/skipodds-openapi.yml#listAlertWebhooks
+      - openapi/skipodds-openapi.yml#createAlertWebhook
+  - status: 429
+    code: quota_exceeded
+    title: Daily quota exceeded for this key
+    remediation: >-
+      Wait for the daily reset or move up a tier. No Retry-After header is sent and no reset timestamp
+      is published — poll the `requests_remaining_today` field on successful responses to stay ahead of
+      exhaustion rather than reacting to the 429.
+    retryable: true
+    retry_after_header: false
+    in_spec: true
+    source_operations:
+      - openapi/skipodds-openapi.yml#listFixtures
+      - openapi/skipodds-openapi.yml#getFixture
+      - openapi/skipodds-openapi.yml#getFixtureMovement
+      - openapi/skipodds-openapi.yml#listOutrights
+      - openapi/skipodds-openapi.yml#listSportFixtures
+      - openapi/skipodds-openapi.yml#getSportFixture
+      - openapi/skipodds-openapi.yml#getSportFixtureMovement
+      - openapi/skipodds-openapi.yml#listGolfTournaments
+      - openapi/skipodds-openapi.yml#getGolfTournament
+      - openapi/skipodds-openapi.yml#listAlertWebhooks
+      - openapi/skipodds-openapi.yml#createAlertWebhook
+  - status: 404
+    code: null
+    title: Unknown fixture
+    remediation: >-
+      Fixture ids are opaque and must be taken verbatim from a fixtures listing; they also expire as
+      fixtures roll off the board (6h after kickoff for soccer and tennis, 8h for basketball, baseball,
+      hockey, American football, MMA and boxing, 12h for cricket and rugby). Re-list rather than
+      retrying the same id.
+    retryable: false
+    in_spec: false
+    documented_at: https://skipodds.com/docs/limits
+    note: >-
+      Documented in the error reference as "404 unknown fixture" but declared on no OpenAPI operation,
+      and the error slug is not published. A client generated from the spec will not model this case.
+gaps:
+  - No 5xx response is declared on any operation or documented anywhere.
+  - No 400 / validation-error shape is declared, despite parameters with documented ranges (limit 1–50, hours 1–336, threshold_points 1–20).
+  - The 404 case is prose-only and its `error` slug value is unpublished.
+  - No error catalogue page enumerating slugs; the three conditions above are the whole published surface.
+mcp_error_behaviour:
+  note: >-
+    On the MCP server, quota exhaustion is described at https://skipodds.com/mcp as being reported "in
+    plain language rather than failing the tool" — an in-band text response, not a JSON-RPC error.
+    Unsupported JSON-RPC methods do return standard errors (prompts/list and resources/list both
+    answered -32601 method not found).

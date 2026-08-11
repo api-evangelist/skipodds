@@ -1,0 +1,41 @@
+generated: '2026-08-11'
+method: probed
+source: live HTTPS probes of the single host named by apis.yml baseURL and OpenAPI servers[]
+host: https://skipodds.com
+result: none
+summary: >-
+  Every /.well-known/ path probed returned 404 with a JSON body — the host serves real 404s rather
+  than an SPA catch-all, so these are genuine absences, not false negatives. No WellKnown or
+  SecurityTxt pointer is emitted in apis.yml, because the provider serves no document at any of these
+  paths. Note that the MCP server at https://skipodds.com/mcp is anonymous and therefore publishes no
+  OAuth protected-resource or authorization-server metadata to discover.
+documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+related_probes:
+  - path: /robots.txt
+    status: 200
+    note: 'Allow: / with Disallow: /v1/ and Disallow: /embed; names https://skipodds.com/sitemap.xml'
+  - path: /sitemap.xml
+    status: 200
+  - path: /llms.txt
+    status: 404
+x-evidence:
+  fetched: '2026-08-11'
+  content_type_on_404: application/json; charset=utf-8
