@@ -11,7 +11,7 @@ description: >-
   embeddable widget. Data is informational only — no bets are taken, no funds held, and no bookmaker
   names exposed.
 image: https://skipodds.com/favicon.png
-url: https://skipodds.apievangelist.com/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/skipodds/refs/heads/main/apis.yml
 created: '2026-07-17'
 modified: '2026-08-11'
 specificationVersion: '0.21'
