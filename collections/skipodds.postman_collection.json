@@ -1,0 +1,2577 @@
+{
+  "item": [
+    {
+      "id": "8519d084-2916-4801-be5a-46fe1b3048ac",
+      "name": "Soccer fixtures with the SkipOdds Index",
+      "request": {
+        "name": "Soccer fixtures with the SkipOdds Index",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            "fixtures"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [
+            {
+              "disabled": false,
+              "key": "competition",
+              "value": "<string>",
+              "description": "Competition slug"
+            },
+            {
+              "disabled": false,
+              "key": "limit",
+              "value": "25",
+              "description": "Maximum fixtures to return, soonest kick-off first. Defaults to 25."
+            }
+          ],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+            "key": "x-api-key",
+            "value": "<string>"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "fbaf1174-b549-4b84-9f3b-859144d52029",
+          "name": "Fixture list",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "fixtures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "competition",
+                  "value": "premier-league-2026"
+                },
+                {
+                  "key": "limit",
+                  "value": "25"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"source\": \"SkipOdds\",\n  \"attribution\": \"https://skipodds.com\",\n  \"generated_at\": \"1968-06-21T23:55:35.238Z\",\n  \"requests_remaining_today\": 2281,\n  \"tier\": \"standard\",\n  \"competition\": \"string\",\n  \"fixtures\": [\n    {\n      \"id\": \"14c64a45-d023-b037-354f-eda8481041ab\",\n      \"home_team\": \"France\",\n      \"away_team\": \"England\",\n      \"match_date\": \"1972-06-28T03:51:47.993Z\",\n      \"status\": \"scheduled\",\n      \"stage\": \"string\",\n      \"skipodds\": {\n        \"home\": 0.501,\n        \"draw\": 0.2472,\n        \"away\": 0.2518,\n        \"fair_odds\": {\n          \"home\": 1.996,\n          \"draw\": 4.0459,\n          \"away\": 3.9708\n        },\n        \"books_surveyed\": 69,\n        \"margin_removed\": 0.0501\n      }\n    },\n    {\n      \"id\": \"227ca565-ff88-1741-83cd-64c91900c454\",\n      \"home_team\": \"France\",\n      \"away_team\": \"England\",\n      \"match_date\": \"1976-12-29T18:30:39.685Z\",\n      \"status\": \"scheduled\",\n      \"stage\": \"string\",\n      \"skipodds\": {\n        \"home\": 0.501,\n        \"draw\": 0.2472,\n        \"away\": 0.2518,\n        \"fair_odds\": {\n          \"home\": 1.996,\n          \"draw\": 4.0459,\n          \"away\": 3.9708\n        },\n        \"books_surveyed\": 69,\n        \"margin_removed\": 0.0501\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "4792c6c9-ce72-4c11-9fac-2bfd52fa3c4f",
+          "name": "Missing or invalid API key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "fixtures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "competition",
+                  "value": "premier-league-2026"
+                },
+                {
+                  "key": "limit",
+                  "value": "25"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"invalid_api_key\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "fcd315e7-820e-47ad-b549-30657fd7b380",
+          "name": "Daily quota exceeded for this key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "fixtures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "competition",
+                  "value": "premier-league-2026"
+                },
+                {
+                  "key": "limit",
+                  "value": "25"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Too Many Requests",
+          "code": 429,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"quota_exceeded\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "f79c9081-a581-401f-b657-0f8ea4a1445e",
+      "name": "Single soccer fixture",
+      "request": {
+        "name": "Single soccer fixture",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            "fixtures",
+            ":id"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<uuid>",
+              "key": "id",
+              "description": "(Required) Fixture id exactly as returned in the `id` field by GET /v1/fixtures. Opaque — do not construct or guess one."
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+            "key": "x-api-key",
+            "value": "<string>"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "3f486b0c-c52c-442d-aa02-ccb8afdb19f7",
+          "name": "Fixture",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "fixtures",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Fixture id exactly as returned in the `id` field by GET /v1/fixtures. Opaque — do not construct or guess one."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"source\": \"SkipOdds\",\n  \"attribution\": \"https://skipodds.com\",\n  \"generated_at\": \"2015-04-28T16:29:17.374Z\",\n  \"requests_remaining_today\": 3537,\n  \"tier\": \"standard\",\n  \"fixture\": {\n    \"id\": \"f0862a59-1946-cabf-3fe0-473a73697ae0\",\n    \"home_team\": \"France\",\n    \"away_team\": \"England\",\n    \"match_date\": \"1967-07-11T18:01:04.209Z\",\n    \"status\": \"scheduled\",\n    \"stage\": \"string\",\n    \"skipodds\": {\n      \"home\": 0.501,\n      \"draw\": 0.2472,\n      \"away\": 0.2518,\n      \"fair_odds\": {\n        \"home\": 1.996,\n        \"draw\": 4.0459,\n        \"away\": 3.9708\n      },\n      \"books_surveyed\": 69,\n      \"margin_removed\": 0.0501\n    }\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "a4ae6053-7d32-4b9e-b07c-81347f0ef27d",
+          "name": "Missing or invalid API key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "fixtures",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Fixture id exactly as returned in the `id` field by GET /v1/fixtures. Opaque — do not construct or guess one."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"invalid_api_key\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "50949cb6-6545-48db-8c77-15ce0d63d52f",
+          "name": "Daily quota exceeded for this key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "fixtures",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Fixture id exactly as returned in the `id` field by GET /v1/fixtures. Opaque — do not construct or guess one."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Too Many Requests",
+          "code": 429,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"quota_exceeded\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "aad1574b-751e-4a7e-9e0a-715ac1697504",
+      "name": "How the Index moved over time for one soccer fixture",
+      "request": {
+        "name": "How the Index moved over time for one soccer fixture",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            "fixtures",
+            ":id",
+            "movement"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [
+            {
+              "disabled": false,
+              "key": "hours",
+              "value": "24",
+              "description": "Window; capped at 72 (Demo/Starter/Pro) or 336 (Scale)"
+            }
+          ],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<uuid>",
+              "key": "id",
+              "description": "(Required) Fixture id exactly as returned in the `id` field by GET /v1/fixtures. Opaque — do not construct or guess one."
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+            "key": "x-api-key",
+            "value": "<string>"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "0a3ef73b-9237-4201-a492-9f6093670392",
+          "name": "Timestamped Index snapshots",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "fixtures",
+                ":id",
+                "movement"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "hours",
+                  "value": "24"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Fixture id exactly as returned in the `id` field by GET /v1/fixtures. Opaque — do not construct or guess one."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "93dc52f7-e0a8-4204-8df3-bfadb6ee08ef",
+          "name": "Missing or invalid API key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "fixtures",
+                ":id",
+                "movement"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "hours",
+                  "value": "24"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Fixture id exactly as returned in the `id` field by GET /v1/fixtures. Opaque — do not construct or guess one."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"invalid_api_key\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "bb3d41ba-fe6d-429d-867c-d9a49af430f1",
+          "name": "Daily quota exceeded for this key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "fixtures",
+                ":id",
+                "movement"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "hours",
+                  "value": "24"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Fixture id exactly as returned in the `id` field by GET /v1/fixtures. Opaque — do not construct or guess one."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Too Many Requests",
+          "code": 429,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"quota_exceeded\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "ae4218d4-c556-42f2-9177-51536b4ddaed",
+      "name": "Tournament-winner probabilities, normalised across the still-alive field",
+      "request": {
+        "name": "Tournament-winner probabilities, normalised across the still-alive field",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            "outrights"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [
+            {
+              "disabled": false,
+              "key": "competition",
+              "value": "<string>",
+              "description": "Competition slug. Omit to return every competition currently priced."
+            }
+          ],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+            "key": "x-api-key",
+            "value": "<string>"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "44c6f350-e116-49e6-854d-dbb3214c854f",
+          "name": "Winner probabilities",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "outrights"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "competition",
+                  "value": "premier-league-2026"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "bdcae46b-65b3-47d9-a84f-2fc47d160baa",
+          "name": "Missing or invalid API key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "outrights"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "competition",
+                  "value": "premier-league-2026"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"invalid_api_key\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "0ede905a-e8d2-4247-96fa-d4ec2f942a73",
+          "name": "Daily quota exceeded for this key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "outrights"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "competition",
+                  "value": "premier-league-2026"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Too Many Requests",
+          "code": 429,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"quota_exceeded\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "589f2ec0-4f0a-4682-8e13-0e4d848b3533",
+      "name": "Fixtures for a non-soccer sport",
+      "request": {
+        "name": "Fixtures for a non-soccer sport",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            ":sport",
+            "fixtures"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [
+            {
+              "disabled": false,
+              "key": "limit",
+              "value": "25",
+              "description": "Maximum fixtures to return, soonest kick-off first. Defaults to 25."
+            }
+          ],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "sport",
+              "description": "(Required) Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+            "key": "x-api-key",
+            "value": "<string>"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "26c88c64-66c6-429a-be01-b7d1de8e4fb3",
+          "name": "Fixture list (draw-aware for cricket/rugby; 2-way for mma/boxing)",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                ":sport",
+                "fixtures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "25"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sport",
+                  "description": "(Required) Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "a8cad7ea-eb5d-49e3-9ff8-d964bc243264",
+          "name": "Missing or invalid API key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                ":sport",
+                "fixtures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "25"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sport",
+                  "description": "(Required) Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"invalid_api_key\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "c154728b-4e07-4083-90f9-d342bcf4ccfa",
+          "name": "Daily quota exceeded for this key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                ":sport",
+                "fixtures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "25"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sport",
+                  "description": "(Required) Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Too Many Requests",
+          "code": 429,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"quota_exceeded\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "c5cc4297-1ee3-44cf-8d83-5339251caec0",
+      "name": "Single fixture for a non-soccer sport",
+      "request": {
+        "name": "Single fixture for a non-soccer sport",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            ":sport",
+            "fixtures",
+            ":id"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "sport",
+              "description": "(Required) Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+            },
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "id",
+              "description": "(Required) Fixture id as returned by the fixtures list for this sport."
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+            "key": "x-api-key",
+            "value": "<string>"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "99d79dce-b467-4a34-943c-8c3489224a58",
+          "name": "Fixture",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                ":sport",
+                "fixtures",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sport",
+                  "description": "(Required) Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Fixture id as returned by the fixtures list for this sport."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b4f4b3d3-3deb-4c64-a09e-6dc2d9ed9772",
+          "name": "Missing or invalid API key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                ":sport",
+                "fixtures",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sport",
+                  "description": "(Required) Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Fixture id as returned by the fixtures list for this sport."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"invalid_api_key\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "910551c2-6b44-4c61-b6d1-682bcc722a77",
+          "name": "Daily quota exceeded for this key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                ":sport",
+                "fixtures",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sport",
+                  "description": "(Required) Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Fixture id as returned by the fixtures list for this sport."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Too Many Requests",
+          "code": 429,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"quota_exceeded\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "7c19788a-992c-4357-a585-ed17fad79bf4",
+      "name": "Index movement for a non-soccer fixture",
+      "request": {
+        "name": "Index movement for a non-soccer fixture",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            ":sport",
+            "fixtures",
+            ":id",
+            "movement"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [
+            {
+              "disabled": false,
+              "key": "hours",
+              "value": "24",
+              "description": "Look-back window in hours. Defaults to 24; capped at 72 on Demo/Starter/Pro and 336 on Scale."
+            }
+          ],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "sport",
+              "description": "(Required) Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+            },
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "id",
+              "description": "(Required) Fixture id as returned by the fixtures list for this sport."
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+            "key": "x-api-key",
+            "value": "<string>"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "2b4c5a2b-d1d3-43b6-a49d-430211b4dd4e",
+          "name": "Timestamped Index snapshots",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                ":sport",
+                "fixtures",
+                ":id",
+                "movement"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "hours",
+                  "value": "24"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sport",
+                  "description": "(Required) Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Fixture id as returned by the fixtures list for this sport."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "0fcaab9e-9a08-45ea-85b4-5b61c16170de",
+          "name": "Missing or invalid API key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                ":sport",
+                "fixtures",
+                ":id",
+                "movement"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "hours",
+                  "value": "24"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sport",
+                  "description": "(Required) Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Fixture id as returned by the fixtures list for this sport."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"invalid_api_key\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "e9bdc338-0eae-4bf7-a0ef-b165a253c63a",
+          "name": "Daily quota exceeded for this key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                ":sport",
+                "fixtures",
+                ":id",
+                "movement"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "hours",
+                  "value": "24"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sport",
+                  "description": "(Required) Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Fixture id as returned by the fixtures list for this sport."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Too Many Requests",
+          "code": 429,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"quota_exceeded\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "fbfc1c45-fd95-43d2-a23f-f9edf9f650b8",
+      "name": "Golf tournaments with normalised outright-winner probabilities",
+      "request": {
+        "name": "Golf tournaments with normalised outright-winner probabilities",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            "golf",
+            "tournaments"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+            "key": "x-api-key",
+            "value": "<string>"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "96fe58db-39e7-4e87-831f-0df79467061d",
+          "name": "Tournament list",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "golf",
+                "tournaments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "81d7b688-332c-4ab9-afcf-98ac8bb7b816",
+          "name": "Missing or invalid API key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "golf",
+                "tournaments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"invalid_api_key\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "6c44c485-cc84-4e0e-9ee2-001bba4da8ab",
+          "name": "Daily quota exceeded for this key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "golf",
+                "tournaments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Too Many Requests",
+          "code": 429,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"quota_exceeded\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "ff095f3a-e178-4010-b3ad-0f2f382333ae",
+      "name": "Single golf tournament with the full priced field",
+      "request": {
+        "name": "Single golf tournament with the full priced field",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            "golf",
+            "tournaments",
+            ":key"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "key",
+              "description": "(Required) Tournament key as returned by GET /v1/golf/tournaments."
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+            "key": "x-api-key",
+            "value": "<string>"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "af98bdf0-0fd0-4bbe-b943-39d2eb25a6c0",
+          "name": "Tournament with per-player probabilities",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "golf",
+                "tournaments",
+                ":key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) Tournament key as returned by GET /v1/golf/tournaments."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "931e11f3-f00b-4200-9c79-277cc4e0939e",
+          "name": "Missing or invalid API key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "golf",
+                "tournaments",
+                ":key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) Tournament key as returned by GET /v1/golf/tournaments."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"invalid_api_key\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "820519b2-0f5d-40dd-b93a-b21c8158ba2c",
+          "name": "Daily quota exceeded for this key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "golf",
+                "tournaments",
+                ":key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) Tournament key as returned by GET /v1/golf/tournaments."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Too Many Requests",
+          "code": 429,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"quota_exceeded\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "89a79ce1-5b91-4e87-8e3a-4e5cbcf70bac",
+      "name": "List your registered movement-alert webhooks",
+      "request": {
+        "name": "List your registered movement-alert webhooks",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            "alerts",
+            "webhooks"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+            "key": "x-api-key",
+            "value": "<string>"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "b38c711d-9230-4807-872e-746fd9017a7e",
+          "name": "Webhook list",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "alerts",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "461efb10-ff0c-469c-94be-ff5774fc8faa",
+          "name": "Missing or invalid API key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "alerts",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"invalid_api_key\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "4ca1c6b1-441c-4b83-b635-da7d2c08ef01",
+          "name": "Daily quota exceeded for this key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "alerts",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Too Many Requests",
+          "code": 429,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"quota_exceeded\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "d5e49cdb-d17c-4333-9e88-d646de5ac132",
+      "name": "Register a webhook fired when the Index moves past your threshold",
+      "request": {
+        "name": "Register a webhook fired when the Index moves past your threshold",
+        "description": {
+          "content": "Checked every 15 minutes. Discord webhook URLs receive formatted messages; other HTTPS endpoints receive JSON. Slots: Starter 2, Pro 5, Scale 20.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "alerts",
+            "webhooks"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+            "key": "x-api-key",
+            "value": "<string>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"<string>\",\n  \"sport\": \"<string>\",\n  \"threshold\": \"<number>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "13558af2-4f84-4c75-91fb-9b5e9879634f",
+          "name": "Registered webhook",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "alerts",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<string>\",\n  \"sport\": \"<string>\",\n  \"threshold\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "29485f4b-c7b7-49fb-ac90-8d77178feb2f",
+          "name": "Missing or invalid API key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "alerts",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<string>\",\n  \"sport\": \"<string>\",\n  \"threshold\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"invalid_api_key\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "fb9cf2e5-ea3a-4494-8b57-e6eb89a3737f",
+          "name": "Daily quota exceeded for this key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "alerts",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<string>\",\n  \"sport\": \"<string>\",\n  \"threshold\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Too Many Requests",
+          "code": 429,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"quota_exceeded\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://skipodds.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6531ede0-ca8f-4373-842e-8cb264d3c108",
+    "name": "SkipOdds",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Fair sports win probabilities: every surveyed bookmaker price averaged and stripped of its margin (de-vigged), so probabilities sum to exactly 100%. 13 sports, 69+ bookmakers. Authenticate with an Authorization: Bearer header, or the x-api-key header. Never put a key in the query string. Free demo key: skipodds-demo-2026 (100 requests/day, attribution required).\n\nContact Support:\n Email: hello@skipodds.com",
+      "type": "text/plain"
+    }
+  }
+}

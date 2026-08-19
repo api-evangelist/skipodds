@@ -1,0 +1,307 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SkipOdds",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Soccer fixtures with the SkipOdds Index",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://skipodds.com/v1/fixtures",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "competition",
+            "value": "",
+            "type": "query",
+            "description": "Competition slug"
+          },
+          {
+            "name": "limit",
+            "value": "",
+            "type": "query",
+            "description": "Maximum fixtures to return, soonest kick-off first. Defaults to 25."
+          }
+        ]
+      },
+      "docs": "Soccer fixtures with the SkipOdds Index"
+    },
+    {
+      "info": {
+        "name": "Single soccer fixture",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://skipodds.com/v1/fixtures/:id",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path",
+            "description": "Fixture id exactly as returned in the `id` field by GET /v1/fixtures. Opaque — do not construct or guess one."
+          }
+        ]
+      },
+      "docs": "Single soccer fixture"
+    },
+    {
+      "info": {
+        "name": "How the Index moved over time for one soccer fixture",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://skipodds.com/v1/fixtures/:id/movement",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path",
+            "description": "Fixture id exactly as returned in the `id` field by GET /v1/fixtures. Opaque — do not construct or guess one."
+          },
+          {
+            "name": "hours",
+            "value": "",
+            "type": "query",
+            "description": "Window; capped at 72 (Demo/Starter/Pro) or 336 (Scale)"
+          }
+        ]
+      },
+      "docs": "How the Index moved over time for one soccer fixture"
+    },
+    {
+      "info": {
+        "name": "Tournament-winner probabilities, normalised across the still-alive field",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://skipodds.com/v1/outrights",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "competition",
+            "value": "",
+            "type": "query",
+            "description": "Competition slug. Omit to return every competition currently priced."
+          }
+        ]
+      },
+      "docs": "Tournament-winner probabilities, normalised across the still-alive field"
+    },
+    {
+      "info": {
+        "name": "Fixtures for a non-soccer sport",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://skipodds.com/v1/:sport/fixtures",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "sport",
+            "value": "",
+            "type": "path",
+            "description": "Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+          },
+          {
+            "name": "limit",
+            "value": "",
+            "type": "query",
+            "description": "Maximum fixtures to return, soonest kick-off first. Defaults to 25."
+          }
+        ]
+      },
+      "docs": "Fixtures for a non-soccer sport"
+    },
+    {
+      "info": {
+        "name": "Single fixture for a non-soccer sport",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://skipodds.com/v1/:sport/fixtures/:id",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "sport",
+            "value": "",
+            "type": "path",
+            "description": "Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+          },
+          {
+            "name": "id",
+            "value": "",
+            "type": "path",
+            "description": "Fixture id as returned by the fixtures list for this sport."
+          }
+        ]
+      },
+      "docs": "Single fixture for a non-soccer sport"
+    },
+    {
+      "info": {
+        "name": "Index movement for a non-soccer fixture",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://skipodds.com/v1/:sport/fixtures/:id/movement",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "sport",
+            "value": "",
+            "type": "path",
+            "description": "Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport."
+          },
+          {
+            "name": "id",
+            "value": "",
+            "type": "path",
+            "description": "Fixture id as returned by the fixtures list for this sport."
+          },
+          {
+            "name": "hours",
+            "value": "",
+            "type": "query",
+            "description": "Look-back window in hours. Defaults to 24; capped at 72 on Demo/Starter/Pro and 336 on Scale."
+          }
+        ]
+      },
+      "docs": "Index movement for a non-soccer fixture"
+    },
+    {
+      "info": {
+        "name": "Golf tournaments with normalised outright-winner probabilities",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://skipodds.com/v1/golf/tournaments",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": ""
+          }
+        ]
+      },
+      "docs": "Golf tournaments with normalised outright-winner probabilities"
+    },
+    {
+      "info": {
+        "name": "Single golf tournament with the full priced field",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://skipodds.com/v1/golf/tournaments/:key",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "key",
+            "value": "",
+            "type": "path",
+            "description": "Tournament key as returned by GET /v1/golf/tournaments."
+          }
+        ]
+      },
+      "docs": "Single golf tournament with the full priced field"
+    },
+    {
+      "info": {
+        "name": "List your registered movement-alert webhooks",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://skipodds.com/v1/alerts/webhooks",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": ""
+          }
+        ]
+      },
+      "docs": "List your registered movement-alert webhooks"
+    },
+    {
+      "info": {
+        "name": "Register a webhook fired when the Index moves past your threshold",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://skipodds.com/v1/alerts/webhooks",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Checked every 15 minutes. Discord webhook URLs receive formatted messages; other HTTPS endpoints receive JSON. Slots: Starter 2, Pro 5, Scale 20."
+    }
+  ],
+  "bundled": true
+}
