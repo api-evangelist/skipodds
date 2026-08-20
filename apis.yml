@@ -16,6 +16,19 @@ created: '2026-07-17'
 modified: '2026-08-11'
 specificationVersion: '0.23'
 tags:
+  - Sports
+  - Odds
+  - probabilities
+  - Betting Data
+  - de-vig
+  - Sports Data
+  - Real-Time
+  - Webhook
+  - Sports Betting
+  - MCP
+  - Agent Ready
+  - Market Data
+tags_raw:
   - sports
   - odds
   - probabilities
@@ -40,6 +53,15 @@ apis:
     humanURL: https://skipodds.com/docs
     baseURL: https://skipodds.com
     tags:
+      - Sports
+      - Odds
+      - probabilities
+      - Betting Data
+      - de-vig
+      - Sports Data
+      - Real-Time
+      - Webhook
+    tags_raw:
       - sports
       - odds
       - probabilities
@@ -84,6 +106,12 @@ apis:
     humanURL: https://skipodds.com/mcp
     baseURL: https://skipodds.com/mcp
     tags:
+      - MCP
+      - Agent Ready
+      - Sports
+      - Odds
+      - probabilities
+    tags_raw:
       - mcp
       - agent-ready
       - sports
