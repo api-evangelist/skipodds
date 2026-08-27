@@ -42,92 +42,150 @@ tags_raw:
   - agent-ready
   - market-data
 apis:
-  - name: SkipOdds REST API
-    description: >-
-      API-key-authenticated REST API returning de-vigged consensus sports probabilities, fixtures,
-      outrights, line movement, and webhook alerts across 13 sports. Public OpenAPI 3.0.3 contract with
-      11 operations, served at https://skipodds.com/openapi.json. Authenticate with an
-      `Authorization: Bearer` header (or the legacy `x-api-key` header) — never in the query string.
-      Remaining daily quota is returned in the response body as `requests_remaining_today` rather than
-      in rate-limit headers.
-    humanURL: https://skipodds.com/docs
-    baseURL: https://skipodds.com
-    tags:
-      - Sports
-      - Odds
-      - probabilities
-      - Betting Data
-      - de-vig
-      - Sports Data
-      - Real-Time
-      - Webhook
-    tags_raw:
-      - sports
-      - odds
-      - probabilities
-      - betting-data
-      - de-vig
-      - sports-data
-      - real-time
-      - webhooks
-    properties:
-      - type: OpenAPI
-        url: openapi/skipodds-openapi.yml
-      - type: OpenAPI
-        url: https://skipodds.com/openapi.json
-      - type: Documentation
-        url: https://skipodds.com/docs
-      - type: APIReference
-        url: https://skipodds.com/docs
-      - type: Authentication
-        url: authentication/skipodds-authentication.yml
-      - type: Conventions
-        url: conventions/skipodds-conventions.yml
-      - type: ErrorCatalog
-        url: errors/skipodds-problem-types.yml
-      - type: DataModel
-        url: data-model/skipodds-data-model.yml
-      - type: Overlay
-        url: overlays/skipodds-openapi-overlay.yaml
-      - type: RateLimits
-        url: rate-limits/skipodds-rate-limits.yml
-      - type: Webhooks
-        url: asyncapi/skipodds-webhooks.yml
-      - type: Sandbox
-        url: sandbox/skipodds-sandbox.yml
-  - name: SkipOdds MCP Server
-    description: >-
-      Hosted Model Context Protocol server exposing the SkipOdds Index to AI assistants — stateless
-      streamable-http at https://skipodds.com/mcp, protocol version 2025-06-18, five read-only tools
-      (list_fixtures, get_fixture, get_fixture_movement, list_tournament_outrights,
-      list_golf_tournaments). It answers `tools/list` and every tool with no credentials at all,
-      falling back to the shared demo quota; a free personal key raises the limit and travels as a
-      Bearer token.
-    humanURL: https://skipodds.com/mcp
-    baseURL: https://skipodds.com/mcp
-    tags:
-      - MCP
-      - Agent Ready
-      - Sports
-      - Odds
-      - probabilities
-    tags_raw:
-      - mcp
-      - agent-ready
-      - sports
-      - odds
-      - probabilities
-    properties:
-      - type: MCPServer
-        url: https://skipodds.com/mcp
-      - type: MCPServer
-        url: mcp/skipodds-mcp.yml
-      - type: ToolCrosswalk
-        url: mcp/skipodds-tool-crosswalk.yml
-      - type: Documentation
-        url: https://skipodds.com/mcp
-      - type: Authentication
-        url: authentication/skipodds-authentication.yml
+- name: SkipOdds MCP Server
+  description: >-
+    Hosted Model Context Protocol server exposing the SkipOdds Index to AI assistants — stateless streamable-http
+    at https://skipodds.com/mcp, protocol version 2025-06-18, five read-only tools (list_fixtures, get_fixture,
+    get_fixture_movement, list_tournament_outrights, list_golf_tournaments). It answers `tools/list` and
+    every tool with no credentials at all, falling back to the shared demo quota; a free personal key
+    raises the limit and travels as a Bearer token.
+  humanURL: https://skipodds.com/mcp
+  baseURL: https://skipodds.com/mcp
+  tags:
+  - MCP
+  - Agent Ready
+  - Sports
+  - Odds
+  - probabilities
+  tags_raw:
+  - mcp
+  - agent-ready
+  - sports
+  - odds
+  - probabilities
+  properties:
+  - type: MCPServer
+    url: https://skipodds.com/mcp
+  - type: MCPServer
+    url: mcp/skipodds-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/skipodds-tool-crosswalk.yml
+  - type: Documentation
+    url: https://skipodds.com/mcp
+  - type: Authentication
+    url: authentication/skipodds-authentication.yml
+- aid: skipodds:skipodds-alerts-api
+  name: SkipOdds Alerts API
+  description: The Alerts API from SkipOdds — 1 operation(s) for alerts.
+  humanURL: https://skipodds.com/docs
+  baseURL: https://skipodds.com
+  tags:
+  - Alerts
+  properties:
+  - type: OpenAPI
+    url: openapi/skipodds-alerts-api-openapi.yml
+  - type: Documentation
+    url: https://skipodds.com/docs
+  - type: APIReference
+    url: https://skipodds.com/docs
+  - type: Authentication
+    url: authentication/skipodds-authentication.yml
+  - type: Conventions
+    url: conventions/skipodds-conventions.yml
+  - type: ErrorCatalog
+    url: errors/skipodds-problem-types.yml
+  - type: DataModel
+    url: data-model/skipodds-data-model.yml
+  - type: RateLimits
+    url: rate-limits/skipodds-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/skipodds-webhooks.yml
+  - type: Sandbox
+    url: sandbox/skipodds-sandbox.yml
+- aid: skipodds:skipodds-fixtures-api
+  name: SkipOdds Fixtures API
+  description: The Fixtures API from SkipOdds — 6 operation(s) for fixtures.
+  humanURL: https://skipodds.com/docs
+  baseURL: https://skipodds.com
+  tags:
+  - Fixtures
+  properties:
+  - type: OpenAPI
+    url: openapi/skipodds-fixtures-api-openapi.yml
+  - type: Documentation
+    url: https://skipodds.com/docs
+  - type: APIReference
+    url: https://skipodds.com/docs
+  - type: Authentication
+    url: authentication/skipodds-authentication.yml
+  - type: Conventions
+    url: conventions/skipodds-conventions.yml
+  - type: ErrorCatalog
+    url: errors/skipodds-problem-types.yml
+  - type: DataModel
+    url: data-model/skipodds-data-model.yml
+  - type: RateLimits
+    url: rate-limits/skipodds-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/skipodds-webhooks.yml
+  - type: Sandbox
+    url: sandbox/skipodds-sandbox.yml
+- aid: skipodds:skipodds-golf-api
+  name: SkipOdds Golf API
+  description: The Golf API from SkipOdds — 2 operation(s) for golf.
+  humanURL: https://skipodds.com/docs
+  baseURL: https://skipodds.com
+  tags:
+  - Golf
+  properties:
+  - type: OpenAPI
+    url: openapi/skipodds-golf-api-openapi.yml
+  - type: Documentation
+    url: https://skipodds.com/docs
+  - type: APIReference
+    url: https://skipodds.com/docs
+  - type: Authentication
+    url: authentication/skipodds-authentication.yml
+  - type: Conventions
+    url: conventions/skipodds-conventions.yml
+  - type: ErrorCatalog
+    url: errors/skipodds-problem-types.yml
+  - type: DataModel
+    url: data-model/skipodds-data-model.yml
+  - type: RateLimits
+    url: rate-limits/skipodds-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/skipodds-webhooks.yml
+  - type: Sandbox
+    url: sandbox/skipodds-sandbox.yml
+- aid: skipodds:skipodds-outrights-api
+  name: SkipOdds Outrights API
+  description: The Outrights API from SkipOdds — 1 operation(s) for outrights.
+  humanURL: https://skipodds.com/docs
+  baseURL: https://skipodds.com
+  tags:
+  - Outrights
+  properties:
+  - type: OpenAPI
+    url: openapi/skipodds-outrights-api-openapi.yml
+  - type: Documentation
+    url: https://skipodds.com/docs
+  - type: APIReference
+    url: https://skipodds.com/docs
+  - type: Authentication
+    url: authentication/skipodds-authentication.yml
+  - type: Conventions
+    url: conventions/skipodds-conventions.yml
+  - type: ErrorCatalog
+    url: errors/skipodds-problem-types.yml
+  - type: DataModel
+    url: data-model/skipodds-data-model.yml
+  - type: RateLimits
+    url: rate-limits/skipodds-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/skipodds-webhooks.yml
+  - type: Sandbox
+    url: sandbox/skipodds-sandbox.yml
 maintainers:
   - FN: SkipSeek Inc.
     email: hello@skipodds.com
