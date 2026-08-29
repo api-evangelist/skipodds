@@ -10,6 +10,18 @@ description: >-
   public OpenAPI 3.0.3 REST contract, an anonymous streamable-http MCP server, and a keyless
   embeddable widget. Data is informational only — no bets are taken, no funds held, and no bookmaker
   names exposed.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://skipodds.com/favicon.png
 url: https://raw.githubusercontent.com/api-evangelist/skipodds/refs/heads/main/apis.yml
 created: '2026-07-17'
