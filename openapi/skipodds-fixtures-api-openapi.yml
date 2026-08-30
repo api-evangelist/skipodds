@@ -1,0 +1,529 @@
+openapi: 3.2.0
+info:
+  title: SkipOdds Fixtures API
+  version: 1.0.0
+  description: 'Fair sports win probabilities: every surveyed bookmaker price averaged and stripped of its margin (de-vigged), so probabilities sum to exactly 100%. 13 sports, 69+ bookmakers. Authenticate with an Authorization: Bearer header, or the x-api-key header. Never put a key in the query string. Free demo key: skipodds-demo-2026 (100 requests/day, attribution required).'
+  termsOfService: https://skipodds.com/terms
+  contact:
+    email: hello@skipodds.com
+    url: https://skipodds.com
+servers:
+- url: https://skipodds.com
+security:
+- BearerAuth: []
+- ApiKeyHeader: []
+tags:
+- name: Fixtures
+paths:
+  /v1/fixtures:
+    get:
+      operationId: listFixtures
+      summary: Soccer fixtures with the SkipOdds Index
+      parameters:
+      - name: x-api-key
+        in: header
+        required: false
+        schema:
+          type: string
+        description: 'API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).'
+      - name: competition
+        in: query
+        schema:
+          type: string
+          example: premier-league-2026
+        description: Competition slug
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 25
+        description: Maximum fixtures to return, soonest kick-off first. Defaults to 25.
+      responses:
+        '200':
+          description: Fixture list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  source:
+                    type: string
+                    example: SkipOdds
+                  attribution:
+                    type: string
+                    example: https://skipodds.com
+                  generated_at:
+                    type: string
+                    format: date-time
+                  requests_remaining_today:
+                    type: integer
+                  tier:
+                    type: string
+                    example: standard
+                  competition:
+                    type: string
+                  fixtures:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        home_team:
+                          type: string
+                          example: France
+                        away_team:
+                          type: string
+                          example: England
+                        match_date:
+                          type: string
+                          format: date-time
+                        status:
+                          type: string
+                          example: scheduled
+                        stage:
+                          type:
+                          - string
+                          - 'null'
+                        skipodds:
+                          type: object
+                          description: The SkipOdds Index — de-vigged consensus probabilities that sum to 1.
+                          properties:
+                            home:
+                              type: number
+                              example: 0.501
+                            draw:
+                              type:
+                              - number
+                              - 'null'
+                              example: 0.2472
+                            away:
+                              type: number
+                              example: 0.2518
+                            fair_odds:
+                              type: object
+                              properties:
+                                home:
+                                  type: number
+                                  example: 1.996
+                                draw:
+                                  type:
+                                  - number
+                                  - 'null'
+                                  example: 4.0459
+                                away:
+                                  type: number
+                                  example: 3.9708
+                            books_surveyed:
+                              type: integer
+                              example: 69
+                            margin_removed:
+                              type: number
+                              example: 0.0501
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: invalid_api_key
+        '429':
+          description: Daily quota exceeded for this key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: quota_exceeded
+      tags:
+      - Fixtures
+  /v1/fixtures/{id}:
+    get:
+      operationId: getFixture
+      summary: Single soccer fixture
+      parameters:
+      - name: x-api-key
+        in: header
+        required: false
+        schema:
+          type: string
+        description: 'API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).'
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Fixture id exactly as returned in the `id` field by GET /v1/fixtures. Opaque — do not construct or guess one.
+      responses:
+        '200':
+          description: Fixture
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  source:
+                    type: string
+                    example: SkipOdds
+                  attribution:
+                    type: string
+                    example: https://skipodds.com
+                  generated_at:
+                    type: string
+                    format: date-time
+                  requests_remaining_today:
+                    type: integer
+                  tier:
+                    type: string
+                    example: standard
+                  fixture:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      home_team:
+                        type: string
+                        example: France
+                      away_team:
+                        type: string
+                        example: England
+                      match_date:
+                        type: string
+                        format: date-time
+                      status:
+                        type: string
+                        example: scheduled
+                      stage:
+                        type:
+                        - string
+                        - 'null'
+                      skipodds:
+                        type: object
+                        description: The SkipOdds Index — de-vigged consensus probabilities that sum to 1.
+                        properties:
+                          home:
+                            type: number
+                            example: 0.501
+                          draw:
+                            type:
+                            - number
+                            - 'null'
+                            example: 0.2472
+                          away:
+                            type: number
+                            example: 0.2518
+                          fair_odds:
+                            type: object
+                            properties:
+                              home:
+                                type: number
+                                example: 1.996
+                              draw:
+                                type:
+                                - number
+                                - 'null'
+                                example: 4.0459
+                              away:
+                                type: number
+                                example: 3.9708
+                          books_surveyed:
+                            type: integer
+                            example: 69
+                          margin_removed:
+                            type: number
+                            example: 0.0501
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: invalid_api_key
+        '429':
+          description: Daily quota exceeded for this key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: quota_exceeded
+      tags:
+      - Fixtures
+  /v1/fixtures/{id}/movement:
+    get:
+      operationId: getFixtureMovement
+      summary: How the Index moved over time for one soccer fixture
+      parameters:
+      - name: x-api-key
+        in: header
+        required: false
+        schema:
+          type: string
+        description: 'API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).'
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Fixture id exactly as returned in the `id` field by GET /v1/fixtures. Opaque — do not construct or guess one.
+      - name: hours
+        in: query
+        schema:
+          type: integer
+          default: 24
+        description: Window; capped at 72 (Demo/Starter/Pro) or 336 (Scale)
+      responses:
+        '200':
+          description: Timestamped Index snapshots
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: invalid_api_key
+        '429':
+          description: Daily quota exceeded for this key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: quota_exceeded
+      tags:
+      - Fixtures
+  /v1/{sport}/fixtures:
+    get:
+      operationId: listSportFixtures
+      summary: Fixtures for a non-soccer sport
+      parameters:
+      - name: x-api-key
+        in: header
+        required: false
+        schema:
+          type: string
+        description: 'API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).'
+      - name: sport
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - tennis
+          - cricket
+          - rugby
+          - baseball
+          - football
+          - basketball
+          - hockey
+          - college-football
+          - college-basketball
+          - mma
+          - boxing
+        description: Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport.
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 25
+        description: Maximum fixtures to return, soonest kick-off first. Defaults to 25.
+      responses:
+        '200':
+          description: Fixture list (draw-aware for cricket/rugby; 2-way for mma/boxing)
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: invalid_api_key
+        '429':
+          description: Daily quota exceeded for this key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: quota_exceeded
+      tags:
+      - Fixtures
+  /v1/{sport}/fixtures/{id}:
+    get:
+      operationId: getSportFixture
+      summary: Single fixture for a non-soccer sport
+      parameters:
+      - name: x-api-key
+        in: header
+        required: false
+        schema:
+          type: string
+        description: 'API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).'
+      - name: sport
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - tennis
+          - cricket
+          - rugby
+          - baseball
+          - football
+          - basketball
+          - hockey
+          - college-football
+          - college-basketball
+          - mma
+          - boxing
+        description: Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport.
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Fixture id as returned by the fixtures list for this sport.
+      responses:
+        '200':
+          description: Fixture
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: invalid_api_key
+        '429':
+          description: Daily quota exceeded for this key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: quota_exceeded
+      tags:
+      - Fixtures
+  /v1/{sport}/fixtures/{id}/movement:
+    get:
+      operationId: getSportFixtureMovement
+      summary: Index movement for a non-soccer fixture
+      parameters:
+      - name: x-api-key
+        in: header
+        required: false
+        schema:
+          type: string
+        description: 'API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).'
+      - name: sport
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - tennis
+          - cricket
+          - rugby
+          - baseball
+          - football
+          - basketball
+          - hockey
+          - college-football
+          - college-basketball
+          - mma
+          - boxing
+        description: Sport slug. Soccer has its own unprefixed /v1/fixtures routes; use these for every other sport.
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Fixture id as returned by the fixtures list for this sport.
+      - name: hours
+        in: query
+        schema:
+          type: integer
+          default: 24
+        description: Look-back window in hours. Defaults to 24; capped at 72 on Demo/Starter/Pro and 336 on Scale.
+      responses:
+        '200':
+          description: Timestamped Index snapshots
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: invalid_api_key
+        '429':
+          description: Daily quota exceeded for this key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: quota_exceeded
+      tags:
+      - Fixtures
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Preferred. Send the API key as `Authorization: Bearer <key>`.'
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      description: Accepted for existing integrations.
+      name: x-api-key
+externalDocs:
+  description: Human-readable API reference
+  url: https://skipodds.com/docs

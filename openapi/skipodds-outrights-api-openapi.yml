@@ -1,0 +1,77 @@
+openapi: 3.2.0
+info:
+  title: SkipOdds Outrights API
+  version: 1.0.0
+  description: 'Fair sports win probabilities: every surveyed bookmaker price averaged and stripped of its margin (de-vigged), so probabilities sum to exactly 100%. 13 sports, 69+ bookmakers. Authenticate with an Authorization: Bearer header, or the x-api-key header. Never put a key in the query string. Free demo key: skipodds-demo-2026 (100 requests/day, attribution required).'
+  termsOfService: https://skipodds.com/terms
+  contact:
+    email: hello@skipodds.com
+    url: https://skipodds.com
+servers:
+- url: https://skipodds.com
+security:
+- BearerAuth: []
+- ApiKeyHeader: []
+tags:
+- name: Outrights
+paths:
+  /v1/outrights:
+    get:
+      operationId: listOutrights
+      summary: Tournament-winner probabilities, normalised across the still-alive field
+      parameters:
+      - name: x-api-key
+        in: header
+        required: false
+        schema:
+          type: string
+        description: 'API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).'
+      - name: competition
+        in: query
+        schema:
+          type: string
+          example: premier-league-2026
+        description: Competition slug. Omit to return every competition currently priced.
+      responses:
+        '200':
+          description: Winner probabilities
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: invalid_api_key
+        '429':
+          description: Daily quota exceeded for this key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: quota_exceeded
+      tags:
+      - Outrights
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Preferred. Send the API key as `Authorization: Bearer <key>`.'
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      description: Accepted for existing integrations.
+      name: x-api-key
+externalDocs:
+  description: Human-readable API reference
+  url: https://skipodds.com/docs

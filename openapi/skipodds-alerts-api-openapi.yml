@@ -1,0 +1,119 @@
+openapi: 3.2.0
+info:
+  title: SkipOdds Alerts API
+  version: 1.0.0
+  description: 'Fair sports win probabilities: every surveyed bookmaker price averaged and stripped of its margin (de-vigged), so probabilities sum to exactly 100%. 13 sports, 69+ bookmakers. Authenticate with an Authorization: Bearer header, or the x-api-key header. Never put a key in the query string. Free demo key: skipodds-demo-2026 (100 requests/day, attribution required).'
+  termsOfService: https://skipodds.com/terms
+  contact:
+    email: hello@skipodds.com
+    url: https://skipodds.com
+servers:
+- url: https://skipodds.com
+security:
+- BearerAuth: []
+- ApiKeyHeader: []
+tags:
+- name: Alerts
+paths:
+  /v1/alerts/webhooks:
+    get:
+      operationId: listAlertWebhooks
+      summary: List your registered movement-alert webhooks
+      parameters:
+      - name: x-api-key
+        in: header
+        required: false
+        schema:
+          type: string
+        description: 'API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).'
+      responses:
+        '200':
+          description: Webhook list
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: invalid_api_key
+        '429':
+          description: Daily quota exceeded for this key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: quota_exceeded
+      tags:
+      - Alerts
+    post:
+      operationId: createAlertWebhook
+      summary: Register a webhook fired when the Index moves past your threshold
+      description: 'Checked every 15 minutes. Discord webhook URLs receive formatted messages; other HTTPS endpoints receive JSON. Slots: Starter 2, Pro 5, Scale 20.'
+      parameters:
+      - name: x-api-key
+        in: header
+        required: false
+        schema:
+          type: string
+        description: 'API key. Prefer Authorization: Bearer. Demo key: skipodds-demo-2026 (100 req/day).'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                sport:
+                  type: string
+                threshold:
+                  type: number
+      responses:
+        '200':
+          description: Registered webhook
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: invalid_api_key
+        '429':
+          description: Daily quota exceeded for this key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: quota_exceeded
+      tags:
+      - Alerts
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Preferred. Send the API key as `Authorization: Bearer <key>`.'
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      description: Accepted for existing integrations.
+      name: x-api-key
+externalDocs:
+  description: Human-readable API reference
+  url: https://skipodds.com/docs
