@@ -1,20 +1,18 @@
 ---
 kin_checks:
   slug: skipodds
-  schema_version: 0.15.1
-  scored_at: '2026-08-27'
-  run_ts: 2026-08-27T140727
+  schema_version: 0.16.0
+  scored_at: '2026-08-29'
+  run_ts: 2026-08-29T213958
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.15.1.yml; counts below let you verify that.
+    in rubric/scoring-0.16.0.yml; counts below let you verify that.
   counts:
     total: 130
-    earned: 50
+    earned: 51
     partial: 6
-    missed: 52
+    missed: 51
     na: 22
   checks:
-  - id: multiple_apis
-    status: missed
   - id: well_known_published
     status: missed
   - id: llms_txt_published
@@ -23,22 +21,19 @@ kin_checks:
     status: missed
   - id: openapi_3_2
     status: missed
-    detail: 0 of 1 openapi documents pass
+    detail: 0 of 4 openapi documents pass
   - id: openapi_3_1
     status: missed
-    detail: 0 of 1 openapi documents pass
+    detail: 0 of 4 openapi documents pass
   - id: operations_description_coverage
     status: missed
-    detail: 0 of 1 openapi documents pass
-  - id: operations_tagged
-    status: missed
-    detail: 0 of 1 openapi documents pass
+    detail: 0 of 4 openapi documents pass
   - id: components_reuse
     status: missed
-    detail: 0 of 1 openapi documents pass
+    detail: 0 of 4 openapi documents pass
   - id: webhooks_or_callbacks
     status: missed
-    detail: 0 of 1 openapi documents pass
+    detail: 0 of 4 openapi documents pass
   - id: json_schema_present
     status: missed
   - id: json_schema_per_resource
@@ -60,6 +55,8 @@ kin_checks:
   - id: balanced_severities
     status: missed
   - id: vocabulary_published
+    status: missed
+  - id: overlay_published
     status: missed
   - id: change_log_present
     status: missed
