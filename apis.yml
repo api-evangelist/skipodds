@@ -229,6 +229,8 @@ x-enrichment:
   artifacts_added: 25
   pass: local-v1
 common:
+- type: Website
+  url: https://www.skipodds.com/
 - type: DeveloperPortal
   url: https://skipodds.com/docs
 - type: Documentation
