@@ -1,0 +1,43 @@
+{
+  "provider": "skipodds",
+  "sources": [
+    "_original/skipodds-openapi.json"
+  ],
+  "outputs": [
+    "skipodds-alerts-api-openapi.yml",
+    "skipodds-fixtures-api-openapi.yml",
+    "skipodds-golf-api-openapi.yml",
+    "skipodds-outrights-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "skipodds-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "skipodds-openapi.json: tagged paths GET /v1/fixtures -> Fixtures",
+    "skipodds-openapi.json: tagged paths GET /v1/fixtures/{id} -> Fixtures",
+    "skipodds-openapi.json: tagged paths GET /v1/fixtures/{id}/movement -> Fixtures",
+    "skipodds-openapi.json: tagged paths GET /v1/outrights -> Outrights",
+    "skipodds-openapi.json: tagged paths GET /v1/{sport}/fixtures -> Fixtures",
+    "skipodds-openapi.json: tagged paths GET /v1/{sport}/fixtures/{id} -> Fixtures",
+    "skipodds-openapi.json: tagged paths GET /v1/{sport}/fixtures/{id}/movement -> Fixtures",
+    "skipodds-openapi.json: tagged paths GET /v1/golf/tournaments -> Golf",
+    "skipodds-openapi.json: tagged paths GET /v1/golf/tournaments/{key} -> Golf",
+    "skipodds-openapi.json: tagged paths GET /v1/alerts/webhooks -> Alerts",
+    "skipodds-openapi.json: tagged paths POST /v1/alerts/webhooks -> Alerts",
+    "skipodds-openapi.json: declared missing tag: Alerts",
+    "skipodds-openapi.json: declared missing tag: Fixtures",
+    "skipodds-openapi.json: declared missing tag: Golf",
+    "skipodds-openapi.json: declared missing tag: Outrights",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/skipodds-openapi.yml: archived document superseded by a larger archived document",
+    "skipodds-alerts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "skipodds-fixtures-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "skipodds-golf-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "skipodds-outrights-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
