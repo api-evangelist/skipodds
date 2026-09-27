@@ -106,7 +106,6 @@ apis:
   name: SkipOdds Alerts API
   description: The Alerts API from SkipOdds — 1 operation(s) for alerts.
   humanURL: https://skipodds.com/docs
-  baseURL: https://skipodds.com
   tags:
   - Alerts
   properties:
@@ -134,7 +133,6 @@ apis:
   name: SkipOdds Fixtures API
   description: The Fixtures API from SkipOdds — 6 operation(s) for fixtures.
   humanURL: https://skipodds.com/docs
-  baseURL: https://skipodds.com
   tags:
   - Fixtures
   properties:
@@ -162,7 +160,6 @@ apis:
   name: SkipOdds Golf API
   description: The Golf API from SkipOdds — 2 operation(s) for golf.
   humanURL: https://skipodds.com/docs
-  baseURL: https://skipodds.com
   tags:
   - Golf
   properties:
@@ -190,7 +187,6 @@ apis:
   name: SkipOdds Outrights API
   description: The Outrights API from SkipOdds — 1 operation(s) for outrights.
   humanURL: https://skipodds.com/docs
-  baseURL: https://skipodds.com
   tags:
   - Outrights
   properties:
