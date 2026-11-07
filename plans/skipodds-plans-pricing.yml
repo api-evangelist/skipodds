@@ -101,7 +101,7 @@ cross_links:
   rate_limits: rate-limits/skipodds-rate-limits.yml
   terms: https://skipodds.com/terms
 x-canonical:
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - free
