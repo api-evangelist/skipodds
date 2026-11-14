@@ -8,6 +8,12 @@ artifacts:
   authentication/skipodds-authentication.yml:
     method: searched
     evidence: declared in the artifact
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   collections/skipodds.opencollection.json:
     method: derived
     evidence: openapi/skipodds
@@ -23,8 +29,14 @@ artifacts:
   conventions/skipodds-conventions.yml:
     method: searched
     evidence: declared in the artifact
+  data-license/skipodds-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/skipodds-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  eligibility/skipodds-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/skipodds-problem-types.yml:
     method: searched
@@ -38,7 +50,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -104,6 +116,9 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/skipodds-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -151,6 +166,9 @@ artifacts:
   plans/skipodds-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
+  privacy/skipodds-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/skipodds-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
@@ -177,6 +195,9 @@ artifacts:
     evidence: declared in the artifact
   sla/skipodds-sla.yml:
     method: generated
+    evidence: declared in the artifact
+  terms/skipodds-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   well-known/skipodds-well-known.yml:
     method: unknown
