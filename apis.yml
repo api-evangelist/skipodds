@@ -1,3 +1,4 @@
+aid: skipodds
 name: SkipOdds
 description: >-
   SkipOdds is a sports-odds data API from SkipSeek Inc. that publishes de-vigged consensus win
@@ -39,7 +40,7 @@ accessModel:
   - rate-limits
   - security
   - sandbox
-  generated: '2026-11-13'
+  generated: '2026-11-20'
   method: derived
 image: https://skipodds.com/favicon.png
 url: https://raw.githubusercontent.com/api-evangelist/skipodds/refs/heads/main/apis.yml
@@ -57,7 +58,6 @@ tags:
   - Webhook
   - Sports Betting
   - MCP
-  - Agent Ready
   - Market Data
 tags_raw:
   - sports
@@ -72,8 +72,10 @@ tags_raw:
   - mcp
   - agent-ready
   - market-data
+  - Agent Ready
 apis:
-- name: SkipOdds MCP Server
+- aid: skipodds:skipodds-mcp-server
+  name: SkipOdds MCP Server
   description: >-
     Hosted Model Context Protocol server exposing the SkipOdds Index to AI assistants — stateless streamable-http
     at https://skipodds.com/mcp, protocol version 2025-06-18, five read-only tools (list_fixtures, get_fixture,
@@ -84,7 +86,6 @@ apis:
   baseURL: https://skipodds.com/mcp
   tags:
   - MCP
-  - Agent Ready
   - Sports
   - Odds
   - Probabilities
@@ -94,6 +95,7 @@ apis:
   - sports
   - odds
   - probabilities
+  - Agent Ready
   properties:
   - type: MCPServer
     url: https://skipodds.com/mcp
